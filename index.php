@@ -22,14 +22,14 @@ session_start();
     ?>
     <div id="LeftSide">
         <div id="DatabasePanel">
-            <form method="GET" action="database.php">
+            <form method="GET" action="./Core/database.php">
                 <button type="submit" name="Option" value="CreateDB">Stwórz bazę</button>
                 <button type="submit" name="Option" value="CreateTable">Stwórz tabele</button>
             </form>
         </div>
 
         <div id="InPanel">
-            <form method="GET" action="in.php">
+            <form method="GET" action="./Core/in.php">
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
@@ -42,7 +42,7 @@ session_start();
         </div>
 
         <div id="ModificationPanel">
-            <form method="GET" action="modification.php">
+            <form method="GET" action="./Core/modification.php">
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
@@ -55,7 +55,7 @@ session_start();
         </div>
 
         <div id="OutPanel">
-            <form method="GET" action="out.php">
+            <form method="GET" action="./Core/out.php">
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
@@ -71,7 +71,7 @@ session_start();
         <?php
         echo "Zalogowano jako: " . $_SESSION[USER_NAME];
         ?>
-        <a href="/auth/logout.php">Wyloguj się</a>
+        <a href="./auth/logout.php">Wyloguj się</a>
     </div>
 </body>
 

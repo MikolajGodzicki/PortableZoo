@@ -2,6 +2,11 @@
 include_once "../Defines/defines.php";
 include_once "authdb.php";
 
+if (!isset($_POST['auth'])) {
+    echo "Nie znaleziono polecenia.";
+    return;
+}
+
 $login = $_POST['login'];
 $password = $_POST['password'];
 $auth = $_POST['auth'];
