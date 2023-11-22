@@ -1,7 +1,4 @@
 <?php
-include_once "../Defines/defines.php";
-include_once "authdb.php";
-
 if (!isset($_POST['auth'])) {
     echo "Nie znaleziono polecenia.";
     return;
@@ -13,6 +10,9 @@ $auth = $_POST['auth'];
 
 session_start();
 
+include_once "../Defines/defines.php";
+include_once "authdb.php";
+
 $connection = DB_Connect();
 
 switch ($auth) {
@@ -20,17 +20,20 @@ switch ($auth) {
         if (CheckUser($connection, $login, $password)) {
             $_SESSION[ACCESS] = AUTH_YES;
             $_SESSION[USER_NAME] = $login;
+            DB_Dispose($connection);
 
             header(HEADER_PRE_INDEX_PHP);
             return;
         }
 
         $_SESSION[ACCESS] = AUTH_NO;
+        DB_Dispose($connection);
         header(HEADER_LOGIN_PHP);
         break;
     case "registration":
         AddUser($connection, $login, $password);
         $_SESSION[ACCESS] = AUTH_NO;
+        DB_Dispose($connection);
         header(HEADER_LOGIN_PHP);
         break;
 }

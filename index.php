@@ -22,13 +22,15 @@ session_start();
     ?>
     <div id="LeftSide">
         <div id="DatabasePanel">
+            Baza danych
             <form method="GET" action="./Core/database.php">
                 <button type="submit" name="Option" value="CreateDB">Stwórz bazę</button>
-                <button type="submit" name="Option" value="CreateTable">Stwórz tabele</button>
+                <button type="submit" name="Option" value="CreateTables">Stwórz tabele</button>
             </form>
         </div>
 
         <div id="InPanel">
+            Dodawanie
             <form method="GET" action="./Core/in.php">
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
@@ -42,6 +44,7 @@ session_start();
         </div>
 
         <div id="ModificationPanel">
+            Modyfikacja
             <form method="GET" action="./Core/modification.php">
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
@@ -55,6 +58,7 @@ session_start();
         </div>
 
         <div id="OutPanel">
+            Wypisywanie
             <form method="GET" action="./Core/out.php">
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
