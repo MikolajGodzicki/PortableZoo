@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+}
+
+#LeftSide {
+    width: 70%;
+    float: left;
+}
+
+#RightSide {
+    width: 30%;
+    float: left;
+    background-color: #eee;
+}
