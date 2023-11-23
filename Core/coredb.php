@@ -10,6 +10,18 @@ function DB_Connect()
   return $connection;
 }
 
+function DB_Connect_with_db()
+{
+  $login = "root";
+  $passwd = "";
+  $addr = "localhost";
+  $db = "portablezoo";
+
+  $connection = mysqli_connect($addr, $login, $passwd, $db) or die("Brak połaczenia " . mysqli_connect_error());
+
+  return $connection;
+}
+
 function CreateDatabase($connection)
 {
   $db = "portablezoo";
@@ -59,12 +71,12 @@ function CreateTables($connection)
         `Telefon` int(11) NOT NULL
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
       
-      CREATE TABLE IF NOT EXISTS portablezoo.`wykonane zabiegi` (
+      CREATE TABLE IF NOT EXISTS portablezoo.`wykonane_zabiegi` (
         `ID_Zabiegu` int(11) NOT NULL,
         `ID_Wizyty` int(11) NOT NULL
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
       
-      CREATE TABLE IF NOT EXISTS portablezoo.`wykorzystane leki` (
+      CREATE TABLE IF NOT EXISTS portablezoo.`wykorzystane_leki` (
         `ID_Leku` int(11) NOT NULL,
         `ID_Wizyty` int(11) NOT NULL,
         `Ilosc` int(11) NOT NULL
@@ -98,11 +110,11 @@ function CreateTables($connection)
       ALTER TABLE portablezoo.`wlasciciele`
         ADD PRIMARY KEY (`ID_Wlasciciela`);
       
-      ALTER TABLE portablezoo.`wykonane zabiegi`
+      ALTER TABLE portablezoo.`wykonane_zabiegi`
         ADD KEY `ID_Zabiegu` (`ID_Zabiegu`),
         ADD KEY `ID_Wizyty` (`ID_Wizyty`);
       
-      ALTER TABLE portablezoo.`wykorzystane leki`
+      ALTER TABLE portablezoo.`wykorzystane_leki`
         ADD KEY `ID_Leku` (`ID_Leku`),
         ADD KEY `ID_Wizyty` (`ID_Wizyty`);
       
@@ -135,13 +147,13 @@ function CreateTables($connection)
       ALTER TABLE portablezoo.`wizyty`
         ADD CONSTRAINT `wizyty_ibfk_1` FOREIGN KEY (`ID_Zwierzaka`) REFERENCES portablezoo.`zwierzeta` (`ID_Zwierza`);
       
-      ALTER TABLE portablezoo.`wykonane zabiegi`
-        ADD CONSTRAINT `wykonane zabiegi_ibfk_1` FOREIGN KEY (`ID_Zabiegu`) REFERENCES portablezoo.`zabiegi` (`ID_Uslugi`),
-        ADD CONSTRAINT `wykonane zabiegi_ibfk_2` FOREIGN KEY (`ID_Wizyty`) REFERENCES portablezoo.`wizyty` (`ID_Wizyty`);
+      ALTER TABLE portablezoo.`wykonane_zabiegi`
+        ADD CONSTRAINT `wykonane_zabiegi_ibfk_1` FOREIGN KEY (`ID_Zabiegu`) REFERENCES portablezoo.`zabiegi` (`ID_Uslugi`),
+        ADD CONSTRAINT `wykonane_zabiegi_ibfk_2` FOREIGN KEY (`ID_Wizyty`) REFERENCES portablezoo.`wizyty` (`ID_Wizyty`);
       
-      ALTER TABLE portablezoo.`wykorzystane leki`
-        ADD CONSTRAINT `wykorzystane leki_ibfk_1` FOREIGN KEY (`ID_Leku`) REFERENCES portablezoo.`leki` (`ID_Leku`),
-        ADD CONSTRAINT `wykorzystane leki_ibfk_2` FOREIGN KEY (`ID_Wizyty`) REFERENCES portablezoo.`wizyty` (`ID_Wizyty`);
+      ALTER TABLE portablezoo.`wykorzystane_leki`
+        ADD CONSTRAINT `wykorzystane_leki_ibfk_1` FOREIGN KEY (`ID_Leku`) REFERENCES portablezoo.`leki` (`ID_Leku`),
+        ADD CONSTRAINT `wykorzystane_leki_ibfk_2` FOREIGN KEY (`ID_Wizyty`) REFERENCES portablezoo.`wizyty` (`ID_Wizyty`);
       
       ALTER TABLE portablezoo.`zwierzeta`
         ADD CONSTRAINT `zwierzeta_ibfk_1` FOREIGN KEY (`ID_Koloru`) REFERENCES portablezoo.`kolory` (`ID_Koloru`),

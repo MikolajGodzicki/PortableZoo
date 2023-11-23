@@ -21,17 +21,18 @@ session_start();
 
     ?>
     <div id="LeftSide">
-        <div id="DatabasePanel">
-            Baza danych
-            <form method="GET" action="./Core/database.php">
+
+        <form method="GET" action="./Core/database.php">
+            <fieldset>
+                <legend>Baza danych</legend>
                 <button type="submit" name="Option" value="CreateDB">Stwórz bazę</button>
                 <button type="submit" name="Option" value="CreateTables">Stwórz tabele</button>
-            </form>
-        </div>
+            </fieldset>
+        </form>
 
-        <div id="InPanel">
-            Dodawanie
-            <form method="GET" action="./Core/in.php">
+        <form method="GET" action="./Core/in.php">
+            <fieldset>
+                <legend>Dodawanie</legend>
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
@@ -40,12 +41,12 @@ session_start();
                 <button type="submit" name="Option" value="WykorzystaneLeki">Wykorzystane Leki</button>
                 <button type="submit" name="Option" value="Wlasciciele">Właściciele</button>
                 <button type="submit" name="Option" value="Leki">Leki</button>
-            </form>
-        </div>
+            </fieldset>
+        </form>
 
-        <div id="ModificationPanel">
-            Modyfikacja
-            <form method="GET" action="./Core/modification.php">
+        <form method="GET" action="./Core/modification.php">
+            <fieldset>
+                <legend>Modyfikacja</legend>
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
@@ -54,12 +55,12 @@ session_start();
                 <button type="submit" name="Option" value="WykorzystaneLeki">Wykorzystane Leki</button>
                 <button type="submit" name="Option" value="Wlasciciele">Właściciele</button>
                 <button type="submit" name="Option" value="Leki">Leki</button>
-            </form>
-        </div>
+            </fieldset>
+        </form>
 
-        <div id="OutPanel">
-            Wypisywanie
-            <form method="GET" action="./Core/out.php">
+        <form method="GET" action="./Core/out.php">
+            <fieldset>
+                <legend>Wypisywanie</legend>
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
                 <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
@@ -68,8 +69,8 @@ session_start();
                 <button type="submit" name="Option" value="WykorzystaneLeki">Wykorzystane Leki</button>
                 <button type="submit" name="Option" value="Wlasciciele">Właściciele</button>
                 <button type="submit" name="Option" value="Leki">Leki</button>
-            </form>
-        </div>
+            </fieldset>
+        </form>
     </div>
     <div id="RightSide">
         <?php

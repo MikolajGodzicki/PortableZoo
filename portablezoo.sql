@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Lis 22, 2023 at 02:26 PM
+-- Generation Time: Lis 23, 2023 at 07:39 AM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -75,10 +75,10 @@ CREATE TABLE `wlasciciele` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `wykonane zabiegi`
+-- Struktura tabeli dla tabeli `wykonane_zabiegi`
 --
 
-CREATE TABLE `wykonane zabiegi` (
+CREATE TABLE `wykonane_zabiegi` (
   `ID_Zabiegu` int(11) NOT NULL,
   `ID_Wizyty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -86,10 +86,10 @@ CREATE TABLE `wykonane zabiegi` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `wykorzystane leki`
+-- Struktura tabeli dla tabeli `wykorzystane_leki`
 --
 
-CREATE TABLE `wykorzystane leki` (
+CREATE TABLE `wykorzystane_leki` (
   `ID_Leku` int(11) NOT NULL,
   `ID_Wizyty` int(11) NOT NULL,
   `Ilosc` int(11) NOT NULL
@@ -152,16 +152,16 @@ ALTER TABLE `wlasciciele`
   ADD PRIMARY KEY (`ID_Wlasciciela`);
 
 --
--- Indeksy dla tabeli `wykonane zabiegi`
+-- Indeksy dla tabeli `wykonane_zabiegi`
 --
-ALTER TABLE `wykonane zabiegi`
+ALTER TABLE `wykonane_zabiegi`
   ADD KEY `ID_Zabiegu` (`ID_Zabiegu`),
   ADD KEY `ID_Wizyty` (`ID_Wizyty`);
 
 --
--- Indeksy dla tabeli `wykorzystane leki`
+-- Indeksy dla tabeli `wykorzystane_leki`
 --
-ALTER TABLE `wykorzystane leki`
+ALTER TABLE `wykorzystane_leki`
   ADD KEY `ID_Leku` (`ID_Leku`),
   ADD KEY `ID_Wizyty` (`ID_Wizyty`);
 
@@ -230,18 +230,18 @@ ALTER TABLE `wizyty`
   ADD CONSTRAINT `wizyty_ibfk_1` FOREIGN KEY (`ID_Zwierzaka`) REFERENCES `zwierzeta` (`ID_Zwierza`);
 
 --
--- Constraints for table `wykonane zabiegi`
+-- Constraints for table `wykonane_zabiegi`
 --
-ALTER TABLE `wykonane zabiegi`
-  ADD CONSTRAINT `wykonane zabiegi_ibfk_1` FOREIGN KEY (`ID_Zabiegu`) REFERENCES `zabiegi` (`ID_Uslugi`),
-  ADD CONSTRAINT `wykonane zabiegi_ibfk_2` FOREIGN KEY (`ID_Wizyty`) REFERENCES `wizyty` (`ID_Wizyty`);
+ALTER TABLE `wykonane_zabiegi`
+  ADD CONSTRAINT `wykonane_zabiegi_ibfk_1` FOREIGN KEY (`ID_Zabiegu`) REFERENCES `zabiegi` (`ID_Uslugi`),
+  ADD CONSTRAINT `wykonane_zabiegi_ibfk_2` FOREIGN KEY (`ID_Wizyty`) REFERENCES `wizyty` (`ID_Wizyty`);
 
 --
--- Constraints for table `wykorzystane leki`
+-- Constraints for table `wykorzystane_leki`
 --
-ALTER TABLE `wykorzystane leki`
-  ADD CONSTRAINT `wykorzystane leki_ibfk_1` FOREIGN KEY (`ID_Leku`) REFERENCES `leki` (`ID_Leku`),
-  ADD CONSTRAINT `wykorzystane leki_ibfk_2` FOREIGN KEY (`ID_Wizyty`) REFERENCES `wizyty` (`ID_Wizyty`);
+ALTER TABLE `wykorzystane_leki`
+  ADD CONSTRAINT `wykorzystane_leki_ibfk_1` FOREIGN KEY (`ID_Leku`) REFERENCES `leki` (`ID_Leku`),
+  ADD CONSTRAINT `wykorzystane_leki_ibfk_2` FOREIGN KEY (`ID_Wizyty`) REFERENCES `wizyty` (`ID_Wizyty`);
 
 --
 -- Constraints for table `zwierzeta`

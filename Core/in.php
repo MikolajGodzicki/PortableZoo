@@ -17,3 +17,5 @@ include("./Options/$Option.php");
 Show("in");
 
 DB_Dispose($connection);
+
+echo "<a href='" . PRE_INDEX_PHP . "'>Wróć</a>";
