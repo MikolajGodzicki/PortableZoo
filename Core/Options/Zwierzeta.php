@@ -31,35 +31,30 @@ function InsertForm()
         Kolor:
         <select name="kolor">
             <?php
-            $connection = DB_Connect_with_db();
+            $db = CoreDatabase::get_instance();
 
             $sql = "SELECT * FROM kolory;";
 
-            $result = mysqli_query($connection, $sql);
+            $result = $db->Query($sql);
             while ($row = mysqli_fetch_array($result)) {
                 $id = $row['ID_Koloru'];
                 echo "<option value='$id'>" . $row['Kolor'] . "</option>";
             }
 
-
-            DB_Dispose($connection);
             ?>
         </select><br />
         Właściciel:
         <select name="wlasciciel">
             <?php
-            $connection = DB_Connect_with_db();
+            $db = CoreDatabase::get_instance();
 
             $sql = "SELECT * FROM wlasciciele;";
 
-            $result = mysqli_query($connection, $sql);
+            $result = $db->Query($sql);
             while ($row = mysqli_fetch_array($result)) {
                 $id = $row['ID_Wlasciciela'];
                 echo "<option value='$id'>" . $row['Imie'] . "</option>";
             }
-
-
-            DB_Dispose($connection);
             ?>
         </select><br />
 
@@ -70,11 +65,11 @@ function InsertForm()
 
 function ModificationList()
 {
-    $connection = DB_Connect_with_db();
+    $db = CoreDatabase::get_instance();
 
     $sql = "SELECT * FROM Zwierzeta;";
 
-    $result = mysqli_query($connection, $sql);
+    $result = $db->Query($sql);
     while ($row = mysqli_fetch_array($result)) {
         $id = $row['ID_Uslugi'];
         echo $id . " " . $row['Nazwa'] . " " . $row['Cena'] . " <a href='modification.php?Option=Zwierzeta&id=$id'>Edytuj</a><br/>";
@@ -83,7 +78,7 @@ function ModificationList()
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         $sql = "SELECT * FROM Zwierzeta WHERE ID_Uslugi=$id;";
-        $result = mysqli_fetch_array(mysqli_query($connection, $sql));
+        $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
         <form method='POST' action='./Options/Zwierzeta_modification.php'>
@@ -96,8 +91,6 @@ function ModificationList()
         </form>
 <?php
     }
-
-    DB_Dispose($connection);
 }
 
 function OutList()

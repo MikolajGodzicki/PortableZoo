@@ -13,38 +13,34 @@ session_start();
 include_once "../Defines/defines.php";
 include_once "authdb.php";
 
-$connection = DB_Connect();
+$db = AuthDatabase::get_instance();
 
 switch ($auth) {
     case "login":
-        if (CheckUser($connection, $login, $password)) {
+        if (CheckUser($db, $login, $password)) {
             $_SESSION[ACCESS] = AUTH_YES;
             $_SESSION[USER_NAME] = $login;
-            DB_Dispose($connection);
-
-            header(HEADER_PRE_INDEX_PHP);
+            ShowAlert("Pomyślnie zalogowano!", PRE_INDEX_PHP);
             return;
         }
 
         $_SESSION[ACCESS] = AUTH_NO;
-        DB_Dispose($connection);
-        header(HEADER_LOGIN_PHP);
+        ShowAlert("Niepoprawne dane!", LOGIN_PHP);
         break;
     case "registration":
-        AddUser($connection, $login, $password);
+        AddUser($db, $login, $password);
         $_SESSION[ACCESS] = AUTH_NO;
-        DB_Dispose($connection);
-        header(HEADER_LOGIN_PHP);
+        ShowAlert("Pomyślnie zarejestrowano!", LOGIN_PHP);
         break;
 }
 
-function CheckUser($connection, $login, $password)
+function CheckUser($db, $login, $password)
 {
     $sql = "SELECT COUNT(1) FROM portablezooauth.users 
     WHERE login='$login' AND
     password='$password';";
 
-    $result = mysqli_fetch_array(mysqli_query($connection, $sql))[0];
+    $result = mysqli_fetch_array($db->Query($sql))[0];
 
     if ($result == 1) {
         return true;
@@ -53,11 +49,10 @@ function CheckUser($connection, $login, $password)
     return false;
 }
 
-function AddUser($connection, $login, $password)
+function AddUser($db, $login, $password)
 {
     $sql = "INSERT INTO portablezooauth.users 
     VALUES(NULL, '$login', '$password');";
-    mysqli_query($connection, $sql);
+    $db->Query($sql);
 }
 
-DB_Dispose($connection);

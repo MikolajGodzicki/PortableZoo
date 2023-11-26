@@ -1,34 +1,43 @@
 <?php
-function DB_Connect()
-{
-    $login = "root";
-    $passwd = "";
-    $addr = "localhost";
-    $db = "portablezooauth";
+class AuthDatabase {
+    private $mysqli;
+    private static $instance;
+  
+    public static function get_instance() {
+      if (!isset(self::$instance)) {
+        self::$instance = new self();
+      }
+      return self::$instance;
+    }
 
-    $connection = mysqli_connect($addr, $login, $passwd) or die("Brak połaczenia " . mysqli_connect_error());
+    private function CreateDatabase($db)
+    {
+        $sql = "CREATE DATABASE IF NOT EXISTS $db";
+        $this->Query($sql);
 
-    CreateDatabase($connection, $db);
+        $sql = "CREATE TABLE IF NOT EXISTS portablezooauth.users (
+            id int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+            login varchar(256) NOT NULL,
+            password varchar(256) NOT NULL
+        );";
+        $this->Query($sql);
+    }
 
-    mysqli_select_db($connection, $db);
+    public function Query($sql) {
+        return $this->mysqli->query($sql);
+    }
 
-    return $connection;
-}
-
-function CreateDatabase($connection, $db)
-{
-    $sql = "CREATE DATABASE IF NOT EXISTS $db";
-    mysqli_query($connection, $sql);
-
-    $sql = "CREATE TABLE IF NOT EXISTS portablezooauth.users (
-        id int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-        login varchar(256) NOT NULL,
-        password varchar(256) NOT NULL
-      );";
-    mysqli_query($connection, $sql);
-}
-
-function DB_Dispose($connection)
-{
-    mysqli_close($connection);
+    public function MultiQuery($sql) {
+        return $this->mysqli->multi_query($sql);
+    }
+  
+    private function __construct() {
+        $login = "root";
+        $passwd = "";
+        $addr = "localhost";
+        $db = "portablezooauth";
+        $this->mysqli = new mysqli($addr,$login,$passwd);
+        $this->CreateDatabase($db);
+        $this->mysqli->select_db($db);
+    }
 }

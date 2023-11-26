@@ -10,12 +10,10 @@ $Option = $_GET['Option'];
 include_once "../Defines/defines.php";
 include_once "coredb.php";
 
-$connection = DB_Connect();
+$db = CoreDatabase::get_instance();
 
 include("./Options/$Option.php");
 
 Show("modification");
-
-DB_Dispose($connection);
 
 echo "<a href='" . PRE_INDEX_PHP . "'>Wróć</a>";
