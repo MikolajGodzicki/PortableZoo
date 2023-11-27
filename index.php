@@ -25,7 +25,6 @@ session_start();
         <form method="GET" action="./Core/database.php">
             <fieldset>
                 <legend>Baza danych</legend>
-                <button type="submit" name="Option" value="CreateDB">Stwórz bazę</button>
                 <button type="submit" name="Option" value="CreateTables">Stwórz tabele</button>
             </fieldset>
         </form>

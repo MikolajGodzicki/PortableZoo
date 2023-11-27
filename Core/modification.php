@@ -12,7 +12,7 @@ include_once "coredb.php";
 
 $db = CoreDatabase::get_instance();
 
-include("./Options/$Option.php");
+include("./Options/$Option/$Option.php");
 
 Show("modification");
 

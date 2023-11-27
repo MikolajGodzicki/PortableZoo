@@ -21,7 +21,7 @@ function Show($type)
 function InsertForm()
 {
 ?>
-    <form method='POST' action='./Options/Zabiegi_insert.php'>
+    <form method='POST' action='./Options/Zabiegi/Zabiegi_insert.php'>
         Nazwa:
         <input type='text' name='nazwa' /><br />
         Cena:
@@ -33,11 +33,11 @@ function InsertForm()
 
 function ModificationList()
 {
-    $connection = DB_Connect_with_db();
+    $db = CoreDatabase::get_instance();
 
     $sql = "SELECT * FROM zabiegi;";
 
-    $result = mysqli_query($connection, $sql);
+    $result = $db->Query($sql);
     while ($row = mysqli_fetch_array($result)) {
         $id = $row['ID_Uslugi'];
         echo $id . " " . $row['Nazwa'] . " " . $row['Cena'] . " <a href='modification.php?Option=Zabiegi&id=$id'>Edytuj</a><br/>";
@@ -46,10 +46,10 @@ function ModificationList()
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         $sql = "SELECT * FROM zabiegi WHERE ID_Uslugi=$id;";
-        $result = mysqli_fetch_array(mysqli_query($connection, $sql));
+        $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
-        <form method='POST' action='./Options/Zabiegi_modification.php'>
+        <form method='POST' action='./Options/Zabiegi/Zabiegi_modification.php'>
             Nazwa:
             <input type='text' name='nazwa' value='<?php echo $result['Nazwa']; ?>' /><br />
             Cena:
@@ -59,8 +59,6 @@ function ModificationList()
         </form>
 <?php
     }
-
-    DB_Dispose($connection);
 }
 
 function OutList()

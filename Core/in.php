@@ -10,7 +10,7 @@ $Option = $_GET['Option'];
 include_once "../Defines/defines.php";
 include_once "coredb.php";
 
-include("./Options/$Option.php");
+include("./Options/$Option/$Option.php");
 
 Show("in");
 
