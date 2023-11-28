@@ -23,7 +23,7 @@ function InsertForm()
 ?>
     <form method='POST' action='./Options/Wizyty/Wizyty_insert.php'>
         ID Zwierzaka:
-        <select name="zwierzak">
+        <select name="zwierzak" required>
             <?php
             $db = CoreDatabase::get_instance();
 
@@ -38,7 +38,7 @@ function InsertForm()
             ?>
         </select><br />
         Kiedy:
-        <input type='date' name='kiedy' /><br />
+        <input type='date' name='kiedy' required /><br />
 
         <input type='submit' value='Dodaj rekord' />
     </form>
@@ -65,7 +65,7 @@ function ModificationList()
     ?>
         <form method='POST' action='./Options/Wizyty/Wizyty_modification.php'>
             ID Zwierzaka:
-            <select name="zwierzak">
+            <select name="zwierzak" required>
                 <?php
                 $db = CoreDatabase::get_instance();
 
@@ -73,16 +73,16 @@ function ModificationList()
 
                 $result_ = $db->Query($sql_);
                 while ($row = mysqli_fetch_array($result_)) {
-                    $id = $row['ID_Zwierza'];
-                    echo "<option value='$id'>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
+                    $id_ = $row['ID_Zwierza'];
+                    echo "<option value='$id_'>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
                 }
 
                 ?>
             </select><br />
 
             Kiedy:
-            <input type='date' name='kiedy' value='<?php echo $result['Kiedy']; ?>' /><br />
-            <input type="hidden" name="id" value="<?php echo $id; ?>" />
+            <input type='date' name='kiedy' value='<?php echo $result['Kiedy']; ?>' required /><br />
+            <input type="hidden" name="id" value="<?php echo $id; ?>" required />
             <input type='submit' value='Zmień rekord' />
         </form>
 <?php

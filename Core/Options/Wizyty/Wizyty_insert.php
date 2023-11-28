@@ -1,5 +1,3 @@
-
-
 <?php
 
 $zwierzak = $_POST['zwierzak'];
@@ -15,5 +13,3 @@ $db = CoreDatabase::get_instance();
 $db->Query($sql);
 
 ShowAlert("Pomyślnie dodano rekord!", PRE3_INDEX_PHP);
-
-?>

@@ -26,11 +26,13 @@ CREATE TABLE IF NOT EXISTS portablezoo.`wlasciciele` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS portablezoo.`wykonane_zabiegi` (
+    `ID_Operacji` int(11) NOT NULL,
     `ID_Zabiegu` int(11) NOT NULL,
     `ID_Wizyty` int(11) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS portablezoo.`wykorzystane_leki` (
+    `ID_Operacji` int(11) NOT NULL,
     `ID_Leku` int(11) NOT NULL,
     `ID_Wizyty` int(11) NOT NULL,
     `Ilosc` int(11) NOT NULL
@@ -51,7 +53,7 @@ CREATE TABLE IF NOT EXISTS portablezoo.`zwierzeta` (
     `ID_Wlasciciela` int(11) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
-ALTER TABLE
+ALTER TABLE 
     portablezoo.`kolory`
 ADD
     PRIMARY KEY (`ID_Koloru`);
@@ -75,6 +77,8 @@ ADD
 
 ALTER TABLE
     portablezoo.`wykonane_zabiegi`
+ADD 
+    PRIMARY KEY (`ID_Operacji`),
 ADD
     KEY `ID_Zabiegu` (`ID_Zabiegu`),
 ADD
@@ -82,6 +86,8 @@ ADD
 
 ALTER TABLE
     portablezoo.`wykorzystane_leki`
+ADD 
+    PRIMARY KEY (`ID_Operacji`),
 ADD
     KEY `ID_Leku` (`ID_Leku`),
 ADD
@@ -120,6 +126,16 @@ ALTER TABLE
     portablezoo.`wlasciciele`
 MODIFY
     `ID_Wlasciciela` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE 
+    `wykonane_zabiegi`
+  MODIFY 
+    `ID_Operacji` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE 
+    `wykorzystane_leki`
+  MODIFY 
+    `ID_Operacji` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE
     portablezoo.`zabiegi`

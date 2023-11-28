@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Lis 23, 2023 at 07:39 AM
+-- Generation Time: Lis 28, 2023 at 01:27 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -79,6 +79,7 @@ CREATE TABLE `wlasciciele` (
 --
 
 CREATE TABLE `wykonane_zabiegi` (
+  `ID_Operacji` int(11) NOT NULL,
   `ID_Zabiegu` int(11) NOT NULL,
   `ID_Wizyty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -90,6 +91,7 @@ CREATE TABLE `wykonane_zabiegi` (
 --
 
 CREATE TABLE `wykorzystane_leki` (
+  `ID_Operacji` int(11) NOT NULL,
   `ID_Leku` int(11) NOT NULL,
   `ID_Wizyty` int(11) NOT NULL,
   `Ilosc` int(11) NOT NULL
@@ -155,6 +157,7 @@ ALTER TABLE `wlasciciele`
 -- Indeksy dla tabeli `wykonane_zabiegi`
 --
 ALTER TABLE `wykonane_zabiegi`
+  ADD PRIMARY KEY (`ID_Operacji`),
   ADD KEY `ID_Zabiegu` (`ID_Zabiegu`),
   ADD KEY `ID_Wizyty` (`ID_Wizyty`);
 
@@ -162,6 +165,7 @@ ALTER TABLE `wykonane_zabiegi`
 -- Indeksy dla tabeli `wykorzystane_leki`
 --
 ALTER TABLE `wykorzystane_leki`
+  ADD PRIMARY KEY (`ID_Operacji`),
   ADD KEY `ID_Leku` (`ID_Leku`),
   ADD KEY `ID_Wizyty` (`ID_Wizyty`);
 
@@ -206,6 +210,18 @@ ALTER TABLE `wizyty`
 --
 ALTER TABLE `wlasciciele`
   MODIFY `ID_Wlasciciela` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wykonane_zabiegi`
+--
+ALTER TABLE `wykonane_zabiegi`
+  MODIFY `ID_Operacji` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wykorzystane_leki`
+--
+ALTER TABLE `wykorzystane_leki`
+  MODIFY `ID_Operacji` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `zabiegi`

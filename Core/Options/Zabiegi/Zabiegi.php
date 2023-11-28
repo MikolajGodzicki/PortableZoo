@@ -23,9 +23,9 @@ function InsertForm()
 ?>
     <form method='POST' action='./Options/Zabiegi/Zabiegi_insert.php'>
         Nazwa:
-        <input type='text' name='nazwa' /><br />
+        <input type='text' name='nazwa' required /><br />
         Cena:
-        <input type='number' step='0.01' name='cena' /><br />
+        <input type='number' step='0.01' name='cena' required /><br />
         <input type='submit' value='Dodaj rekord' />
     </form>
     <?php
@@ -51,9 +51,9 @@ function ModificationList()
     ?>
         <form method='POST' action='./Options/Zabiegi/Zabiegi_modification.php'>
             Nazwa:
-            <input type='text' name='nazwa' value='<?php echo $result['Nazwa']; ?>' /><br />
+            <input type='text' name='nazwa' value='<?php echo $result['Nazwa']; ?>' required /><br />
             Cena:
-            <input type='number' step='0.01' name='cena' value='<?php echo $result['Cena']; ?>' /><br />
+            <input type='number' step='0.01' name='cena' value='<?php echo $result['Cena']; ?>' required /><br />
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <input type='submit' value='Zmień rekord' />
         </form>
