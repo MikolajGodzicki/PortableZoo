@@ -25,6 +25,7 @@ session_start();
         <form method="GET" action="./Core/database.php">
             <fieldset>
                 <legend>Baza danych</legend>
+                <button type="submit" name="Option" value="CreateDB">Stwórz bazę danych</button>
                 <button type="submit" name="Option" value="CreateTables">Stwórz tabele</button>
             </fieldset>
         </form>
@@ -33,11 +34,11 @@ session_start();
             <fieldset>
                 <legend>Dodawanie</legend>
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
-                <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
+                <button type="submit" name="Option" value="Wykonane_Zabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
                 <button type="submit" name="Option" value="Kolory">Kolory</button>
                 <button type="submit" name="Option" value="Zwierzeta">Zwierzęta</button>
-                <button type="submit" name="Option" value="WykorzystaneLeki">Wykorzystane Leki</button>
+                <button type="submit" name="Option" value="Wykorzystane_Leki">Wykorzystane Leki</button>
                 <button type="submit" name="Option" value="Wlasciciele">Właściciele</button>
                 <button type="submit" name="Option" value="Leki">Leki</button>
             </fieldset>
@@ -47,11 +48,11 @@ session_start();
             <fieldset>
                 <legend>Modyfikacja</legend>
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
-                <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
+                <button type="submit" name="Option" value="Wykonane_Zabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
                 <button type="submit" name="Option" value="Kolory">Kolory</button>
                 <button type="submit" name="Option" value="Zwierzeta">Zwierzęta</button>
-                <button type="submit" name="Option" value="WykorzystaneLeki">Wykorzystane Leki</button>
+                <button type="submit" name="Option" value="Wykorzystane_Leki">Wykorzystane Leki</button>
                 <button type="submit" name="Option" value="Wlasciciele">Właściciele</button>
                 <button type="submit" name="Option" value="Leki">Leki</button>
             </fieldset>
@@ -61,11 +62,11 @@ session_start();
             <fieldset>
                 <legend>Wypisywanie</legend>
                 <button type="submit" name="Option" value="Zabiegi">Zabiegi</button>
-                <button type="submit" name="Option" value="WykonaneZabiegi">Wykonane Zabiegi</button>
+                <button type="submit" name="Option" value="Wykonane_Zabiegi">Wykonane Zabiegi</button>
                 <button type="submit" name="Option" value="Wizyty">Wizyty</button>
                 <button type="submit" name="Option" value="Kolory">Kolory</button>
                 <button type="submit" name="Option" value="Zwierzeta">Zwierzęta</button>
-                <button type="submit" name="Option" value="WykorzystaneLeki">Wykorzystane Leki</button>
+                <button type="submit" name="Option" value="Wykorzystane_Leki">Wykorzystane Leki</button>
                 <button type="submit" name="Option" value="Wlasciciele">Właściciele</button>
                 <button type="submit" name="Option" value="Leki">Leki</button>
             </fieldset>

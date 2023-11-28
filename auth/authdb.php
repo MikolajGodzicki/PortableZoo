@@ -1,18 +1,20 @@
 <?php
-class AuthDatabase {
+class AuthDatabase
+{
     private $mysqli;
     private static $instance;
-  
-    public static function get_instance() {
-      if (!isset(self::$instance)) {
-        self::$instance = new self();
-      }
-      return self::$instance;
+
+    public static function get_instance()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
-    private function CreateDatabase($db)
+    private function CreateDatabase()
     {
-        $sql = "CREATE DATABASE IF NOT EXISTS $db";
+        $sql = "CREATE DATABASE IF NOT EXISTS " . AUTH_DB;
         $this->Query($sql);
 
         $sql = "CREATE TABLE IF NOT EXISTS portablezooauth.users (
@@ -23,21 +25,20 @@ class AuthDatabase {
         $this->Query($sql);
     }
 
-    public function Query($sql) {
+    public function Query($sql)
+    {
         return $this->mysqli->query($sql);
     }
 
-    public function MultiQuery($sql) {
+    public function MultiQuery($sql)
+    {
         return $this->mysqli->multi_query($sql);
     }
-  
-    private function __construct() {
-        $login = "root";
-        $passwd = "";
-        $addr = "localhost";
-        $db = "portablezooauth";
-        $this->mysqli = new mysqli($addr,$login,$passwd);
-        $this->CreateDatabase($db);
-        $this->mysqli->select_db($db);
+
+    private function __construct()
+    {
+        $this->mysqli = new mysqli(ADDR, LOGIN, PASSWD);
+        $this->CreateDatabase();
+        $this->mysqli->select_db(AUTH_DB);
     }
 }

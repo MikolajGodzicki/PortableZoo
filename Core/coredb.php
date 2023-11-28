@@ -24,20 +24,27 @@ class CoreDatabase
 
     public function CreateTables()
     {
-        if (!$this->CheckIfDatabaseIsCreated()) {
-            ShowAlert("Najpierw utwórz bazę danych!", PRE_INDEX_PHP);
-            return;
-        }
-
         $sql = fopen("./tables.sql", "r") or die("Błąd przy otwieraniu pliku!");
 
         $this->MultiQuery(fread($sql, filesize("./tables.sql")));
         fclose($sql);
     }
 
-    private function CheckIfDatabaseIsCreated()
+    public function CheckIfDatabaseIsCreated()
     {
-        $sql = "SELECT COUNT(SCHEMA_NAME) FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='portablezoo';";
+        $sql = "SELECT COUNT(SCHEMA_NAME) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='" . CORE_DB . "';";
+
+        $result = mysqli_fetch_array($this->Query($sql))[0];
+        if ($result == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function CheckIfTableIsCreated($table)
+    {
+        $sql = "SELECT COUNT(TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" . CORE_DB . "' AND  TABLE_NAME = '" . $table . "';";
 
         $result = mysqli_fetch_array($this->Query($sql))[0];
         if ($result == 0) {
@@ -49,29 +56,20 @@ class CoreDatabase
 
     public function CreateDatabase()
     {
-        $db = "portablezoo";
-        $sql = "CREATE DATABASE IF NOT EXISTS " . $db;
+        $sql = "CREATE DATABASE IF NOT EXISTS " . CORE_DB;
         $this->Query($sql);
 
-        $this->mysqli->select_db($db);
+        $this->mysqli->select_db(CORE_DB);
     }
 
     private function __construct()
     {
-        $login = "root";
-        $passwd = "";
-        $addr = "localhost";
-        $this->mysqli = new mysqli($addr, $login, $passwd);
-        $this->CreateDatabase();
+        $this->mysqli = new mysqli(ADDR, LOGIN, PASSWD);
 
-        /*
-        if (isset($_SESSION['db']) && !isset($_SESSION['creation'])) {
-          if (!$this->CheckIfDatabaseIsCreated()) {
-            ShowAlert("Najpierw utwórz bazę danych!", PRE_INDEX_PHP);
+        if ($this->CheckIfDatabaseIsCreated()) {
+            //ShowAlert("Najpierw utwórz bazę danych!", PRE_INDEX_PHP);
+            $this->mysqli->select_db(CORE_DB);
             return;
-          }
-
-          $this->mysqli->select_db($_SESSION['db']);
-        }*/
+        }
     }
 }
