@@ -59,6 +59,8 @@ function ModificationList()
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
+        $sql = "SELECT * FROM Wizyty WHERE ID_Wizyty=$id;";
+        $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
         <form method='POST' action='./Options/Wizyty/Wizyty_modification.php'>
@@ -67,21 +69,16 @@ function ModificationList()
                 <?php
                 $db = CoreDatabase::get_instance();
 
-                $sql = "SELECT ID_Zwierza, Imie FROM zwierzeta;";
+                $sql_ = "SELECT ID_Zwierza, Imie FROM zwierzeta;";
 
-                $result = $db->Query($sql);
-                while ($row = mysqli_fetch_array($result)) {
+                $result_ = $db->Query($sql_);
+                while ($row = mysqli_fetch_array($result_)) {
                     $id = $row['ID_Zwierza'];
                     echo "<option value='$id'>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
                 }
 
                 ?>
             </select><br />
-
-            <?php
-            $sql = "SELECT * FROM Wizyty WHERE ID_Wizyty=$id;";
-            $result = mysqli_fetch_array($db->Query($sql));
-            ?>
 
             Kiedy:
             <input type='date' name='kiedy' value='<?php echo $result['Kiedy']; ?>' /><br />
