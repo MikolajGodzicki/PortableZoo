@@ -21,7 +21,7 @@ function Show($type)
 function InsertForm()
 {
 ?>
-    <form method='POST' action='./Options/Zwierzeta_insert.php'>
+    <form method='POST' action='./Options/Zwierzeta/Zwierzeta_insert.php'>
         Rodzaj zwierza:
         <input type='text' name='rodzaj' /><br />
         Imie:
@@ -38,7 +38,7 @@ function InsertForm()
             $result = $db->Query($sql);
             while ($row = mysqli_fetch_array($result)) {
                 $id = $row['ID_Koloru'];
-                echo "<option value='$id'>" . $row['Kolor'] . "</option>";
+                echo "<option value='$id'>" . $row['ID_Koloru'] . ": "  . $row['Kolor'] . "</option>";
             }
 
             ?>
@@ -53,7 +53,7 @@ function InsertForm()
             $result = $db->Query($sql);
             while ($row = mysqli_fetch_array($result)) {
                 $id = $row['ID_Wlasciciela'];
-                echo "<option value='$id'>" . $row['Imie'] . "</option>";
+                echo "<option value='$id'>" . $row['ID_Wlasciciela'] . ": "   . $row['Imie'] . "</option>";
             }
             ?>
         </select><br />
@@ -81,7 +81,7 @@ function ModificationList()
         $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
-        <form method='POST' action='./Options/Zwierzeta_modification.php'>
+        <form method='POST' action='./Options/Zwierzeta/Zwierzeta_modification.php'>
             Nazwa:
             <input type='text' name='nazwa' value='<?php echo $result['Nazwa']; ?>' /><br />
             Cena:

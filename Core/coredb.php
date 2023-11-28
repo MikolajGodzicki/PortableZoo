@@ -67,7 +67,6 @@ class CoreDatabase
         $this->mysqli = new mysqli(ADDR, LOGIN, PASSWD);
 
         if ($this->CheckIfDatabaseIsCreated()) {
-            //ShowAlert("Najpierw utwórz bazę danych!", PRE_INDEX_PHP);
             $this->mysqli->select_db(CORE_DB);
             return;
         }
