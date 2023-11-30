@@ -57,10 +57,53 @@ function ModificationList()
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <input type='submit' value='Zmień rekord' />
         </form>
-<?php
+    <?php
     }
 }
 
 function OutList()
 {
+    $db = CoreDatabase::get_instance();
+
+    ?>
+    <form method="GET" action="out.php">
+        <input type="hidden" name="Option" value="Zabiegi" />
+        <button type="submit" name="type" value="rosnaco">Rosnąco</button>
+
+        <?php
+        ShowSelect("column", $db);
+        ?>
+    </form>
+
+    <form method="GET" action="out.php">
+        <input type="hidden" name="Option" value="Zabiegi" />
+        <button type="submit" name="type" value="malejaco">Malejąco</button>
+
+        <?php
+        ShowSelect("column", $db);
+        ?>
+    </form>
+
+<?php
+
+    $sql = "SELECT * FROM zabiegi;";
+
+    if (isset($_GET['type'])) {
+        switch ($_GET['type']) {
+            case "rosnaco":
+                $column = $_GET['column'];
+                $sql = "SELECT * FROM zabiegi ORDER BY $column ASC;";
+                break;
+            case "malejaco":
+                $column = $_GET['column'];
+                $sql = "SELECT * FROM zabiegi ORDER BY $column DESC;";
+                break;
+        }
+    }
+
+    $result = $db->Query($sql);
+    while ($row = mysqli_fetch_array($result)) {
+        $id = $row['ID_Uslugi'];
+        echo $id . " " . $row['Nazwa'] . " " . $row['Cena'] . "<br/>";
+    }
 }

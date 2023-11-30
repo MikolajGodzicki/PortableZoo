@@ -54,6 +54,15 @@ class CoreDatabase
         return true;
     }
 
+    public function GetColumnNames($table)
+    {
+        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='$table';";
+
+        $result = $this->Query($sql);
+
+        return mysqli_fetch_all($result);
+    }
+
     public function CreateDatabase()
     {
         $sql = "CREATE DATABASE IF NOT EXISTS " . CORE_DB;

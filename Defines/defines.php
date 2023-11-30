@@ -26,3 +26,19 @@ function ShowAlert($text, $location)
         window.location.href='" . $location . "';
     </script>";
 }
+
+function ShowSelect($url_name, $db)
+{
+?>
+    <select name="<?php echo $url_name; ?>" required>
+        <?php
+        $rows = $db->GetColumnNames("zabiegi");
+        foreach ($rows as $row) {
+            $name = $row[0];
+            echo "<option value=$name>$name</option>";
+        }
+
+        ?>
+    </select><br />
+<?php
+}
