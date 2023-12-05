@@ -65,12 +65,13 @@ function ModificationList()
 {
     $db = CoreDatabase::get_instance();
 
-    $sql = "SELECT * FROM Wykorzystane_Leki;";
+    //$sql = "SELECT * FROM Wykorzystane_Leki;";
+    $sql = "SELECT wykorzystane_leki.ID_Operacji, wykorzystane_leki.Ilosc, leki.Nazwa, wizyty.ID_Wizyty ,wizyty.Kiedy FROM Wykorzystane_Leki INNER JOIN leki ON leki.ID_Leku = wykorzystane_leki.ID_Leku INNER JOIN wizyty ON wizyty.ID_Wizyty = wykorzystane_leki.ID_Wizyty";
 
     $result = $db->Query($sql);
     while ($row = mysqli_fetch_array($result)) {
         $id = $row['ID_Operacji'];
-        echo $id . " " . $row['ID_Leku'] . " " . $row['ID_Wizyty'] . " " . $row['Ilosc'] . " <a href='modification.php?Option=Wykorzystane_Leki&id=$id'>Edytuj</a><br/>";
+        echo $id . ": " . $row['Nazwa']  . " x" . $row['Ilosc'] . ", " . $row['Kiedy'] . " <a href='modification.php?Option=Wykorzystane_Leki&id=$id'>Edytuj</a><br/>";
     }
 
     if (isset($_GET['id'])) {

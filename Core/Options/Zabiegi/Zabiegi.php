@@ -68,21 +68,52 @@ function OutList()
     ?>
     <form method="GET" action="out.php">
         <input type="hidden" name="Option" value="Zabiegi" />
-        <button type="submit" name="type" value="rosnaco">Rosnąco</button>
-
+        <label>Sortuj </label>
+        <select name="order_sym" required>
+            <option value='ASC'>rosnąco</option>
+            <option value='DESC'>malejąco</option>
+        </select>
+        <label>według</label>
         <?php
-        ShowSelect("column", $db);
+        ShowSelect("column", $db, "zabiegi");
         ?>
+        <label>Cena:</label>
+        <select id="range_sym" name="range_sym" onchange="GetOption('cena')" required>
+            <option value='none'>brak</option>
+            <option value='>'>większa od</option>
+            <option value='>='>większa lub równa </option>
+            <option value='<'>mniejsza od</option>
+            <option value='<='>mniejsza lub równa</option>
+        </select>
+        <input type="number" step="0.01" id="cena" name="cena" required />
+        <label>Grupuj według</label>
+        <select id="grouping_sym" name="grouping_sym" required>
+            <option value='none'>brak</option>
+            <!-- Dodać opcje grupowania według kolumn -->
+        </select>
+        <script>
+            function GetOption(input) {
+                let opt = document.getElementById("range_sym").value;
+
+                if (opt == "none") {
+                    document.getElementById(input).type = "hidden";
+                } else {
+                    document.getElementById(input).type = "number";
+                }
+            }
+
+            GetOption("cena");
+        </script>
+
+        <br />
+        <button type="submit" name="type" value="sort">Sortuj</button>
     </form>
 
     <form method="GET" action="out.php">
         <input type="hidden" name="Option" value="Zabiegi" />
-        <button type="submit" name="type" value="malejaco">Malejąco</button>
-
-        <?php
-        ShowSelect("column", $db);
-        ?>
+        <button type="submit" name="type" value="reset">Resetuj</button>
     </form>
+
 
 <?php
 
@@ -90,13 +121,19 @@ function OutList()
 
     if (isset($_GET['type'])) {
         switch ($_GET['type']) {
-            case "rosnaco":
+            case "sort":
                 $column = $_GET['column'];
-                $sql = "SELECT * FROM zabiegi ORDER BY $column ASC;";
+                $order_sym = $_GET['order_sym'];
+                $range_sym = $_GET['range_sym'];
+                $cena = $_GET['cena'];
+                if ($range_sym == "none") {
+                    $sql = "SELECT * FROM zabiegi ORDER BY $column $order_sym;";
+                } else {
+                    $sql = "SELECT * FROM zabiegi WHERE Cena $range_sym $cena ORDER BY $column $order_sym;";
+                }
                 break;
-            case "malejaco":
-                $column = $_GET['column'];
-                $sql = "SELECT * FROM zabiegi ORDER BY $column DESC;";
+            case "reset":
+                $sql = "SELECT * FROM zabiegi;";
                 break;
         }
     }

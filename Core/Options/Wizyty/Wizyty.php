@@ -49,12 +49,13 @@ function ModificationList()
 {
     $db = CoreDatabase::get_instance();
 
-    $sql = "SELECT * FROM Wizyty;";
+    //$sql = "SELECT * FROM Wizyty;";
+    $sql = "SELECT wizyty.ID_Wizyty, wizyty.Kiedy, zwierzeta.Imie, zwierzeta.ID_Zwierza FROM wizyty INNER JOIN zwierzeta ON zwierzeta.ID_Zwierza = wizyty.ID_Zwierzaka;";
 
     $result = $db->Query($sql);
     while ($row = mysqli_fetch_array($result)) {
         $id = $row['ID_Wizyty'];
-        echo $id . " " . $row['ID_Zwierzaka'] . " " . $row['Kiedy'] . " <a href='modification.php?Option=Wizyty&id=$id'>Edytuj</a><br/>";
+        echo $id . ": " . $row['ID_Zwierza'] . " " . $row['Imie'] . ", " . $row['Kiedy'] . " <a href='modification.php?Option=Wizyty&id=$id'>Edytuj</a><br/>";
     }
 
     if (isset($_GET['id'])) {
