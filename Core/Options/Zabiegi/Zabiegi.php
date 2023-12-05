@@ -76,7 +76,7 @@ function OutList()
         <label>według</label>
         <?php
         ShowSelect("column", $db, "zabiegi");
-        ?>
+        ?><br />
         <label>Cena:</label>
         <select id="range_sym" name="range_sym" onchange="GetOption('cena')" required>
             <option value='none'>brak</option>
@@ -85,7 +85,7 @@ function OutList()
             <option value='<'>mniejsza od</option>
             <option value='<='>mniejsza lub równa</option>
         </select>
-        <input type="number" step="0.01" id="cena" name="cena" required />
+        <input type="number" step="0.01" id="cena" name="cena" required /><br />
         <label>Grupuj według</label>
         <select id="grouping_sym" name="grouping_sym" required>
             <option value='none'>brak</option>

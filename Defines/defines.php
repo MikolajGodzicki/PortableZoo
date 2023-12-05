@@ -39,6 +39,6 @@ function ShowSelect($url_name, $db, $table)
         }
 
         ?>
-    </select><br />
+    </select>
 <?php
 }

@@ -76,7 +76,7 @@ function OutList()
         <label>według</label>
         <?php
         ShowSelect("column", $db, "leki");
-        ?>
+        ?><br />
         <label>Cena:</label>
         <select id="sym" name="range_sym" onchange="GetOption()" required>
             <option value='none'>brak</option>
