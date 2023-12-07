@@ -42,3 +42,14 @@ function ShowSelect($url_name, $db, $table)
     </select>
 <?php
 }
+
+function ShowSelectWithArrays($syms, $names, $type)
+{
+    for ($i = 0; $i < count($syms); $i++) {
+        if ($_GET[$type] == $syms[$i]) {
+            echo "<option value='" . $syms[$i] . "' selected>" . $names[$i] . "</option>";
+        } else {
+            echo "<option value='" . $syms[$i] . "'>" . $names[$i] . "</option>";
+        }
+    }
+}

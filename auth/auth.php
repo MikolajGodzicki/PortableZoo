@@ -38,7 +38,7 @@ function CheckUser($db, $login, $password)
 {
     $sql = "SELECT COUNT(1) FROM portablezooauth.users 
     WHERE login='$login' AND
-    password='$password';";
+    password='" . md5($password) . "';";
 
     $result = mysqli_fetch_array($db->Query($sql))[0];
 
@@ -52,7 +52,6 @@ function CheckUser($db, $login, $password)
 function AddUser($db, $login, $password)
 {
     $sql = "INSERT INTO portablezooauth.users 
-    VALUES(NULL, '$login', '$password');";
+    VALUES(NULL, '$login', '" . md5($password) . "');";
     $db->Query($sql);
 }
-

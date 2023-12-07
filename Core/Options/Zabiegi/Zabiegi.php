@@ -67,11 +67,31 @@ function OutList()
 
     ?>
     <form method="GET" action="out.php">
+        <h3>Kolumny</h3>
+        <?php
+        $rows = $db->GetColumnNames("zabiegi");
+        $i = 0;
+        foreach ($rows as $row) {
+            $name = $row[0];
+            echo "<label>$name</label>";
+            if (isset($_GET["Kolumna$i"])) {
+                echo "<input type='checkbox' name='Kolumna" . $i . "' value='$name' checked/><br/>";
+            } else {
+                echo "<input type='checkbox' name='Kolumna" . $i . "' value='$name'/><br/>";
+            }
+            $i++;
+        }
+        ?>
+
+        <h3>Opcje</h3>
         <input type="hidden" name="Option" value="Zabiegi" />
         <label>Sortuj </label>
         <select name="order_sym" required>
-            <option value='ASC'>rosnąco</option>
-            <option value='DESC'>malejąco</option>
+            <?php
+            $syms = array("ASC", "DESC");
+            $names = array("rosnąco", "malejąco");
+            ShowSelectWithArrays($syms, $names, 'order_sym');
+            ?>
         </select>
         <label>według</label>
         <?php
@@ -80,17 +100,14 @@ function OutList()
         <label>Cena:</label>
         <select id="range_sym" name="range_sym" onchange="GetOption('cena')" required>
             <option value='none'>brak</option>
-            <option value='>'>większa od</option>
-            <option value='>='>większa lub równa </option>
-            <option value='<'>mniejsza od</option>
-            <option value='<='>mniejsza lub równa</option>
+            <?php
+            $syms = array("=", ">", ">=", "<", "<=");
+            $names = array("równa", "większa od", "większa lub równa", "mniejsza od", "mniejsza lub równa");
+            ShowSelectWithArrays($syms, $names, 'range_sym');
+            ?>
         </select>
-        <input type="number" step="0.01" id="cena" name="cena" required /><br />
-        <label>Grupuj według</label>
-        <select id="grouping_sym" name="grouping_sym" required>
-            <option value='none'>brak</option>
-            <!-- Dodać opcje grupowania według kolumn -->
-        </select>
+        <input type="number" step="0.01" id="cena" name="cena" value="<?php echo (isset($_GET['cena'])) ? $_GET['cena'] : ' '; ?>" required />
+
         <script>
             function GetOption(input) {
                 let opt = document.getElementById("range_sym").value;
@@ -118,6 +135,7 @@ function OutList()
 <?php
 
     $sql = "SELECT * FROM zabiegi;";
+    $array = array();
 
     if (isset($_GET['type'])) {
         switch ($_GET['type']) {
@@ -125,22 +143,54 @@ function OutList()
                 $column = $_GET['column'];
                 $order_sym = $_GET['order_sym'];
                 $range_sym = $_GET['range_sym'];
-                $cena = $_GET['cena'];
-                if ($range_sym == "none") {
-                    $sql = "SELECT * FROM zabiegi ORDER BY $column $order_sym;";
-                } else {
-                    $sql = "SELECT * FROM zabiegi WHERE Cena $range_sym $cena ORDER BY $column $order_sym;";
+
+
+                $rows = $db->GetColumnNames("zabiegi");
+                $i = 0;
+                foreach ($rows as $row) {
+                    $name = $row[0];
+                    if (isset($_GET['Kolumna' . $i]) == "on") {
+                        array_push($array, $_GET['Kolumna' . $i]);
+                    }
+                    $i++;
                 }
+
+
+                if (count($array) == 0) {
+                    echo "Brak wyników<br/>";
+                    return;
+                } else {
+                    $sql = "SELECT " . join(", ", $array) . " FROM zabiegi";
+                }
+
+                $cena = $_GET['cena'];
+
+                if ($range_sym != "none") {
+                    $sql = $sql . " WHERE Cena $range_sym $cena";
+                }
+
+                $sql = $sql . " ORDER BY $column $order_sym;";
                 break;
             case "reset":
-                $sql = "SELECT * FROM zabiegi;";
+                echo "Brak wyników<br/>";
+                return;
                 break;
         }
     }
 
     $result = $db->Query($sql);
-    while ($row = mysqli_fetch_array($result)) {
-        $id = $row['ID_Uslugi'];
-        echo $id . " " . $row['Nazwa'] . " " . $row['Cena'] . "<br/>";
+    echo "<table>";
+    echo "<tr>";
+    foreach ($array as $item) {
+        echo "<td>$item</td>";
     }
+    echo "</tr>";
+    while ($row = mysqli_fetch_row($result)) {
+        echo "<tr>";
+        for ($i = 0; $i < count($row); $i++) {
+            echo "<td>" . $row[$i] . "</td>";
+        }
+        echo "</tr>";
+    }
+    echo "</table>";
 }
