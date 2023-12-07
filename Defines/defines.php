@@ -35,7 +35,11 @@ function ShowSelect($url_name, $db, $table)
         $rows = $db->GetColumnNames($table);
         foreach ($rows as $row) {
             $name = $row[0];
-            echo "<option value=$name>$name</option>";
+            if ($_GET['column'] == $name) {
+                echo "<option value=$name selected>$name</option>";
+            } else {
+                echo "<option value=$name>$name</option>";
+            }
         }
 
         ?>
