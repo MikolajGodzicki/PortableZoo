@@ -139,7 +139,7 @@ function OutList()
             ShowSelectWithArrays($syms, $names, 'range_sym');
             ?>
         </select>
-        <input type="date" id="kiedy" name="kiedy" value=" <?php echo (isset($_GET['kiedy'])) ? $_GET['kiedy'] : ' '; ?>" required />
+        <input type="date" id="kiedy" name="kiedy" value="<?php echo (isset($_GET['kiedy'])) ? $_GET['kiedy'] : ''; ?>" required />
 
         <script>
             function GetOption(input) {
@@ -148,7 +148,7 @@ function OutList()
                 if (opt == "none") {
                     document.getElementById(input).type = "hidden";
                 } else {
-                    document.getElementById(input).type = "number";
+                    document.getElementById(input).type = "date";
                 }
             }
 
@@ -166,7 +166,6 @@ function OutList()
 
 
 <?php
-
     $sql = "SELECT * FROM wizyty;";
     $array = array();
 
@@ -205,7 +204,7 @@ function OutList()
                 $kiedy = $_GET['kiedy'];
 
                 if ($range_sym != "none") {
-                    $sql = $sql . " WHERE kiedy $range_sym $kiedy";
+                    $sql = $sql . " WHERE kiedy $range_sym '$kiedy'";
                 }
 
                 $sql = $sql . " ORDER BY $column $order_sym;";

@@ -63,6 +63,15 @@ class CoreDatabase
         return mysqli_fetch_all($result);
     }
 
+    function GetEnumValues($table, $field)
+    {
+        $sql = "SHOW COLUMNS FROM {$table} WHERE Field = '{$field}'";
+        $type = mysqli_fetch_array($this->Query($sql))['Type'];
+        preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);
+        $enum = explode("','", $matches[1]);
+        return $enum;
+    }
+
     public function CreateDatabase()
     {
         $sql = "CREATE DATABASE IF NOT EXISTS " . CORE_DB;
