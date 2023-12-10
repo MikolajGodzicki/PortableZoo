@@ -15,6 +15,6 @@ $db = CoreDatabase::get_instance();
 
 $db->Query($sql);
 
-ShowAlert("Pomyślnie zmieniono rekord!", PRE3_INDEX_PHP);
+ShowAlert("Pomyślnie zmieniono rekord!", '../../modification.php?Option=Wykorzystane_Leki');
 
 ?>

@@ -137,6 +137,12 @@ function OutList()
     $sql = "SELECT * FROM zabiegi;";
     $array = array();
 
+    if (!isset($_GET['type'])) {
+        echo "<hr>";
+        echo "Brak wyników<br/>";
+        return;
+    }
+
     if (isset($_GET['type'])) {
         switch ($_GET['type']) {
             case "sort":
@@ -155,8 +161,8 @@ function OutList()
                     $i++;
                 }
 
-
                 if (count($array) == 0) {
+                    echo "<hr>";
                     echo "Brak wyników<br/>";
                     return;
                 } else {
@@ -172,13 +178,20 @@ function OutList()
                 $sql = $sql . " ORDER BY $column $order_sym;";
                 break;
             case "reset":
-                echo "Brak wyników<br/>";
+                header("location: ./out.php?Option=Zabiegi");
                 return;
                 break;
         }
     }
 
+    echo "<hr>";
+
     $result = $db->Query($sql);
+    if (mysqli_num_rows($result) == 0) {
+        echo "Brak wyników<br/>";
+        return;
+    }
+
     echo "<table>";
     echo "<tr>";
     foreach ($array as $item) {

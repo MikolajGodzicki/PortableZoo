@@ -26,4 +26,6 @@ include("./Options/$Option/$Option.php");
 
 Show("out");
 
+echo "<hr>";
+
 echo "<a href='" . PRE_INDEX_PHP . "'>Wróć</a>";
