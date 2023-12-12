@@ -23,7 +23,7 @@ function InsertForm()
 ?>
     <form method='POST' action='./Options/Kolory/Kolory_insert.php'>
         Kolor:
-        <input type='text' name='kolor' required /><br />
+        <input type='text' name='kolor' pattern="[A-Za-z]{1,}" required /><br />
         <input type='submit' value='Dodaj rekord' />
     </form>
     <?php
@@ -49,7 +49,7 @@ function ModificationList()
     ?>
         <form method='POST' action='./Options/Kolory/Kolory_modification.php'>
             Kolor:
-            <input type='text' name='kolor' value='<?php echo $result['Kolor']; ?>' required /><br />
+            <input type='text' name='kolor' pattern="[A-Za-z]{1,}" value='<?php echo $result['Kolor']; ?>' required /><br />
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <input type='submit' value='Zmień rekord' />
         </form>

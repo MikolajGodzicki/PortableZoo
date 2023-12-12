@@ -1,5 +1,4 @@
 <?php
-echo $_GET['Option'] . "<br/>";
 
 function Show($type)
 {
@@ -23,9 +22,9 @@ function InsertForm()
 ?>
     <form method='POST' action='./Options/Zwierzeta/Zwierzeta_insert.php'>
         Rodzaj zwierza:
-        <input type='text' name='rodzaj' required /><br />
+        <input type='text' name='rodzaj' pattern="[A-Za-z]{1,}" required /><br />
         Imie:
-        <input type='text' name='imie' required /><br />
+        <input type='text' name='imie' pattern="[A-Za-z]{1,}" required /><br />
         Data urodzin:
         <input type='date' name='data' required /><br />
         Kolor:
@@ -60,7 +59,7 @@ function InsertForm()
 
         <input type='submit' value='Dodaj rekord' />
     </form>
-    <?php
+<?php
 }
 
 function ModificationList()
@@ -70,10 +69,37 @@ function ModificationList()
     $sql = "SELECT * FROM Zwierzeta;";
 
     $result = $db->Query($sql);
-    while ($row = mysqli_fetch_array($result)) {
-        $id = $row['ID_Zwierza'];
-        echo $id . " " . $row['Imie'] . " " . $row['Data_urodzin'] . " <a href='modification.php?Option=Zwierzeta&id=$id'>Edytuj</a><br/>";
-    }
+
+?>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Imie</th>
+                <th scope="col">Data urodzin</th>
+                <th scope="col">Działanie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($row = mysqli_fetch_array($result)) {
+                $id = $row['ID_Zwierza'];
+                $imie = $row['Imie'];
+                $data = $row['Data_urodzin'];
+                $link = "<a href='modification.php?Option=Zwierzeta&id=$id'>Edytuj</a>";
+                echo "
+                    <tr>
+                        <th scope='row'>$id</th>
+                        <td>$imie</td>
+                        <td>$data</td>
+                        <td>$link</td>
+                    </tr>
+                ";
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -83,9 +109,9 @@ function ModificationList()
     ?>
         <form method='POST' action='./Options/Zwierzeta/Zwierzeta_modification.php'>
             Rodzaj zwierza:
-            <input type='text' name='rodzaj' value='<?php echo $result['Rodzaj_zwierza']; ?>' required /><br />
+            <input type='text' name='rodzaj' pattern="[A-Za-z]{1,}" value='<?php echo $result['Rodzaj_zwierza']; ?>' required /><br />
             Imie:
-            <input type='text' name='imie' value='<?php echo $result['Imie']; ?>' required /><br />
+            <input type='text' name='imie' pattern="[A-Za-z]{1,}" value='<?php echo $result['Imie']; ?>' required /><br />
             Data urodzin:
             <input type='date' name='data' value='<?php echo $result['Data_urodzin']; ?>' required /><br />
             Kolor:
@@ -126,7 +152,7 @@ function ModificationList()
                 ?>
             </select><br />
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
-            <input type='submit' value='Zmień rekord' />
+            <input type='submit' class="btn btn-secondary" value='Zmień rekord' />
         </form>
     <?php
     }

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS portablezoo.`wlasciciele` (
     `Ulica` varchar(256) NOT NULL,
     `Miasto` varchar(256) NOT NULL,
     `Poczta` varchar(256) NOT NULL,
-    `Telefon` int(11) NOT NULL
+    `Telefon` varchar(9) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS portablezoo.`wykonane_zabiegi` (

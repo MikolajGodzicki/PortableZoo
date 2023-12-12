@@ -20,6 +20,11 @@
 
     include_once "../Defines/defines.php";
     include_once "coredb.php";
+    session_start();
+
+    if ($_SESSION[ACCESS] == AUTH_NO) {
+        header(HEADER_PRE_AUTH_LOGIN_PHP);
+    }
 
     $db = CoreDatabase::get_instance();
 

@@ -10,5 +10,28 @@ body {
 #RightSide {
     width: 30%;
     float: left;
-    background-color: #eee;
+}
+
+#RightContent {
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+.FormField {
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.FormField legend {
+    padding: 0 10px;
+}
+
+#logout {
+    text-decoration: none;
+    color: white;
 }

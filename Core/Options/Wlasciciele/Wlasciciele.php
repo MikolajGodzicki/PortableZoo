@@ -23,17 +23,17 @@ function InsertForm()
 ?>
     <form method='POST' action='./Options/Wlasciciele/Wlasciciele_insert.php'>
         Nazwisko:
-        <input type='text' name='nazwisko' required /><br />
+        <input type='text' name='nazwisko' pattern="[A-Za-z]{1,}" required /><br />
         Imie:
-        <input type='text' name='imie' required /><br />
+        <input type='text' name='imie' pattern="[A-Za-z]{1,}" required /><br />
         Ulica:
-        <input type='text' name='ulica' required /><br />
+        <input type='text' name='ulica' pattern="[A-Za-z]{1,}" required /><br />
         Miasto:
-        <input type='text' name='miasto' required /><br />
+        <input type='text' name='miasto' pattern="[A-Za-z]{1,}" required /><br />
         Poczta:
-        <input type='text' name='poczta' required /><br />
+        <input type='text' name='poczta' pattern="[0-9]{2}-[0-9]{3}" placeholder="00-000" required /><br />
         Numer Telefonu:
-        <input type='text' name='telefon' required /><br />
+        <input type='text' name='telefon' pattern="[0-9]{9}" placeholder="123456789" required /><br />
         <input type='submit' value='Dodaj rekord' />
     </form>
     <?php
@@ -59,17 +59,17 @@ function ModificationList()
     ?>
         <form method='POST' action='./Options/Wlasciciele/Wlasciciele_modification.php'>
             Nazwisko:
-            <input type='text' name='nazwisko' value='<?php echo $result['Nazwisko']; ?>' required /><br />
+            <input type='text' name='nazwisko' value='<?php echo $result['Nazwisko']; ?>' pattern="[A-Za-z]{1,}" required /><br />
             Imie:
-            <input type='text' name='imie' value='<?php echo $result['Imie']; ?>' required /><br />
+            <input type='text' name='imie' value='<?php echo $result['Imie']; ?>' pattern="[A-Za-z]{1,}" required /><br />
             Ulica:
-            <input type='text' name='ulica' value='<?php echo $result['Ulica']; ?>' required /><br />
+            <input type='text' name='ulica' value='<?php echo $result['Ulica']; ?>' pattern="[A-Za-z]{1,}" required /><br />
             Miasto:
-            <input type='text' name='miasto' value='<?php echo $result['Miasto']; ?>' required /><br />
+            <input type='text' name='miasto' value='<?php echo $result['Miasto']; ?>' pattern="[A-Za-z]{1,}" required /><br />
             Poczta:
-            <input type='text' name='poczta' value='<?php echo $result['Poczta']; ?>' required /><br />
+            <input type='text' name='poczta' value='<?php echo $result['Poczta']; ?>' pattern="[0-9]{2}-[0-9]{3}" required /><br />
             Numer Telefonu:
-            <input type='number' name='telefon' value='<?php echo $result['Telefon']; ?>' required /><br />
+            <input type='text' name='telefon' value='<?php echo $result['Telefon']; ?>' pattern="[0-9]{9}" required /><br />
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <input type='submit' value='Zmień rekord' />
         </form>
