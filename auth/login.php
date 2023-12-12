@@ -7,19 +7,25 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <title>Logowanie</title>
+    <link rel="stylesheet" href="auth.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
-    <form method="POST" action="auth.php">
-        <label>Login</label>
-        <input type="text" name="login" required /><br />
-        <label>Password</label>
-        <input type="password" name="password" /><br />
-        <input type="submit" value="Zaloguj się" />
+    <h2>Logowanie</h2>
+    <form class="Form" method="POST" action="auth.php">
+        <div class="mb-3">
+            <label for="login" class="form-label">Login:</label>
+            <input type="text" class="form-control" id="login" name="login" required /><br />
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Hasło:</label>
+            <input type="password" class="form-control" id="password" name="password" required /><br />
+        </div>
+        <input class="btn btn-success" type="submit" value="Zaloguj się" />
 
         <a href="registration.php">
-            <input type="button" value="Rejestracja" />
+            <input class="btn btn-success" type="button" value="Rejestracja" />
         </a>
 
         <input type="hidden" name="auth" value="login" />
