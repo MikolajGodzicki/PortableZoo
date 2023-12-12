@@ -97,6 +97,8 @@ session_start();
                     <button type="submit" class="btn btn-secondary" name="Option" value="Wykorzystane_Leki">Wykorzystane Leki</button>
                     <button type="submit" class="btn btn-secondary" name="Option" value="Wlasciciele">Właściciele</button>
                     <button type="submit" class="btn btn-secondary" name="Option" value="Leki">Leki</button>
+
+                    <input type="hidden" name="Show" value="all" />
                 </fieldset>
             </form>
         </div>

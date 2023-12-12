@@ -90,43 +90,50 @@ function OutList()
     $db = CoreDatabase::get_instance();
 
     ?>
-    <form method="GET" action="out.php">
+    <form class="Form" method="GET" action="out.php">
         <h3>Kolumny</h3>
-        <?php
-        $rows = $db->GetColumnNames("kolory");
-        $i = 0;
-        foreach ($rows as $row) {
-            $name = $row[0];
-            echo "<label>$name</label>";
-            if (isset($_GET["Kolumna$i"])) {
-                echo "<input type='checkbox' name='Kolumna" . $i . "' value='$name' checked/><br/>";
-            } else {
-                echo "<input type='checkbox' name='Kolumna" . $i . "' value='$name'/><br/>";
+        <div class="mb-3">
+            <?php
+            $rows = $db->GetColumnNames("kolory");
+            $i = 0;
+            foreach ($rows as $row) {
+                $name = $row[0];
+                echo "<div class='form-check'><label for='Kolumna$i' class='form-check-label'>$name</label>";
+                if (isset($_GET["Show"]) == "all") {
+                    echo "<input type='checkbox' class='form-check-input' id='Kolumna" . $i . "' name='Kolumna" . $i . "' value='$name' checked/><br/>";
+                } else if (isset($_GET["Kolumna$i"])) {
+                    echo "<input type='checkbox' class='form-check-input' id='Kolumna" . $i . "' name='Kolumna" . $i . "' value='$name' checked/><br/>";
+                } else {
+                    echo "<input type='checkbox' class='form-check-input' id='Kolumna" . $i . "' name='Kolumna" . $i . "' value='$name'/><br/>";
+                }
+                echo "</div>";
+                $i++;
             }
-            $i++;
-        }
-        ?>
+            ?>
+        </div>
 
         <h3>Opcje</h3>
-        <input type="hidden" name="Option" value="kolory" />
-        <label>Sortuj </label>
-        <select name="order_sym" required>
+        <div class="mb-3">
+            <input type="hidden" name="Option" value="Kolory" />
+            <label for="order_sym" class="form-label">Sortuj </label>
+            <select class="form-select" id="order_sym" name="order_sym" required>
+                <?php
+                $syms = array("ASC", "DESC");
+                $names = array("rosnąco", "malejąco");
+                ShowSelectWithArrays($syms, $names, 'order_sym');
+                ?>
+            </select>
+            <label>według</label>
             <?php
-            $syms = array("ASC", "DESC");
-            $names = array("rosnąco", "malejąco");
-            ShowSelectWithArrays($syms, $names, 'order_sym');
+            ShowSelect("column", $db, "kolory");
             ?>
-        </select>
-        <label>według</label>
-        <?php
-        ShowSelect("column", $db, "kolory");
-        ?><br />
-        <button type="submit" name="type" value="sort">Sortuj</button>
+        </div>
+        <button type="submit" class="btn btn-success" name="type" value="sort">Sortuj</button>
     </form>
 
     <form method="GET" action="out.php">
         <input type="hidden" name="Option" value="Kolory" />
-        <button type="submit" name="type" value="reset">Resetuj</button>
+        <button type="submit" class="Button btn btn-danger" name="type" value="reset">Resetuj</button>
     </form>
 
 
@@ -168,7 +175,8 @@ function OutList()
                 $sql = $sql . " ORDER BY $column $order_sym;";
                 break;
             case "reset":
-                header("location: ./out.php?Option=Kolory");
+                echo "<hr>";
+                echo "Brak wyników<br/>";
                 return;
                 break;
         }
@@ -182,12 +190,15 @@ function OutList()
         return;
     }
 
-    echo "<table>";
+    echo "<table class='table table-striped'>
+    <thead class='table-dark'>";
     echo "<tr>";
     foreach ($array as $item) {
         echo "<td>$item</td>";
     }
-    echo "</tr>";
+    echo "</tr>
+    </thead>
+    <tbody>";
     while ($row = mysqli_fetch_row($result)) {
         echo "<tr>";
         for ($i = 0; $i < count($row); $i++) {
@@ -195,5 +206,6 @@ function OutList()
         }
         echo "</tr>";
     }
-    echo "</table>";
+    echo "</tbody>
+    </table>";
 }

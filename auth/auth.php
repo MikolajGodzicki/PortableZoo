@@ -28,6 +28,12 @@ switch ($auth) {
         ShowAlert("Niepoprawne dane!", LOGIN_PHP);
         break;
     case "registration":
+        if (CheckUserIfExist($db, $login)) {
+            $_SESSION[ACCESS] = AUTH_NO;
+            ShowAlert("Ten login jest zajęty!", REGISTRATION_PHP);
+            return;
+        }
+
         AddUser($db, $login, $password);
         $_SESSION[ACCESS] = AUTH_NO;
         ShowAlert("Pomyślnie zarejestrowano!", LOGIN_PHP);
@@ -39,6 +45,20 @@ function CheckUser($db, $login, $password)
     $sql = "SELECT COUNT(1) FROM portablezooauth.users 
     WHERE login='$login' AND
     password='" . md5($password) . "';";
+
+    $result = mysqli_fetch_array($db->Query($sql))[0];
+
+    if ($result == 1) {
+        return true;
+    }
+
+    return false;
+}
+
+function CheckUserIfExist($db, $login)
+{
+    $sql = "SELECT COUNT(1) FROM portablezooauth.users 
+    WHERE login='$login';";
 
     $result = mysqli_fetch_array($db->Query($sql))[0];
 

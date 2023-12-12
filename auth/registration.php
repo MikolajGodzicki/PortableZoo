@@ -25,7 +25,7 @@ session_start();
         <input class="btn btn-success" type="submit" value="Zarejestruj się" />
 
         <a href=" login.php">
-            <input class="btn btn-success" type="button" value="Logowanie" />
+            <input class="btn btn-warning" type="button" value="Logowanie" />
         </a>
 
         <input type="hidden" name="auth" value="registration" />

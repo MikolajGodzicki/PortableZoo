@@ -16,6 +16,7 @@ define("PRE_INDEX_PHP", "../index.php");
 define("PRE3_INDEX_PHP", "../../../index.php");
 define("HEADER_LOGIN_PHP", "location: ./login.php");
 define("LOGIN_PHP", "./login.php");
+define("REGISTRATION_PHP", "./registration.php");
 define("HEADER_AUTH_LOGIN_PHP", "location: ./auth/login.php");
 define("HEADER_PRE_AUTH_LOGIN_PHP", "location: ../auth/login.php");
 
@@ -31,7 +32,7 @@ function ShowAlert($text, $location)
 function ShowSelect($url_name, $db, $table)
 {
 ?>
-    <select name="<?php echo $url_name; ?>" required>
+    <select class="form-select" id="<?php echo $url_name; ?>" name="<?php echo $url_name; ?>" required>
         <?php
         $rows = $db->GetColumnNames($table);
         foreach ($rows as $row) {
