@@ -14,6 +14,7 @@ session_start();
 
 <body>
     <?php
+    include_once "./Core/coredb.php";
     include_once "Defines/defines.php";
 
     if ($_SESSION[ACCESS] == AUTH_NO) {
@@ -26,8 +27,28 @@ session_start();
             <form method="GET" action="./Core/database.php">
                 <fieldset>
                     <legend>Baza danych</legend>
-                    <button type="submit" class="btn btn-success" name="Option" value="CreateDB">Stwórz bazę danych</button>
-                    <button type="submit" class="btn btn-success" name="Option" value="CreateTables">Stwórz tabele</button>
+                    <?php
+                    $db = CoreDatabase::get_instance();
+                    if (!$db->CheckIfDatabaseIsCreated()) {
+                    ?>
+                        <button type="submit" class="btn btn-success" name="Option" value="CreateDB">Stwórz bazę danych</button>
+                    <?php
+                    } else {
+                    ?>
+                        <button type="submit" class="btn btn-success" name="Option" value="CreateDB" disabled>Baza danych jest stworzona</button>
+                    <?php
+                    }
+
+                    if (!$db->CheckIfTablesIsCreated()) {
+                    ?>
+                        <button type="submit" class="btn btn-success" name="Option" value="CreateTables">Stwórz tabele</button>
+                    <?php
+                    } else {
+                    ?>
+                        <button type="submit" class="btn btn-success" name="Option" value="CreateTables" disabled>Tabele są stworzone</button>
+                    <?php
+                    }
+                    ?>
                 </fieldset>
             </form>
         </div>

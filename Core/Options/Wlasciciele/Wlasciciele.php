@@ -1,6 +1,4 @@
 <?php
-echo $_GET['Option'] . "<br/>";
-
 function Show($type)
 {
     switch ($type) {
@@ -21,22 +19,34 @@ function Show($type)
 function InsertForm()
 {
 ?>
-    <form method='POST' action='./Options/Wlasciciele/Wlasciciele_insert.php'>
-        Nazwisko:
-        <input type='text' name='nazwisko' pattern="[A-Za-z]{1,}" required /><br />
-        Imie:
-        <input type='text' name='imie' pattern="[A-Za-z]{1,}" required /><br />
-        Ulica:
-        <input type='text' name='ulica' pattern="[A-Za-z]{1,}" required /><br />
-        Miasto:
-        <input type='text' name='miasto' pattern="[A-Za-z]{1,}" required /><br />
-        Poczta:
-        <input type='text' name='poczta' pattern="[0-9]{2}-[0-9]{3}" placeholder="00-000" required /><br />
-        Numer Telefonu:
-        <input type='text' name='telefon' pattern="[0-9]{9}" placeholder="123456789" required /><br />
-        <input type='submit' value='Dodaj rekord' />
+    <form class="Form" method='POST' action='./Options/Wlasciciele/Wlasciciele_insert.php'>
+        <div class="mb-3">
+            <label for="nazwisko" class="form-label">Nazwisko:</label>
+            <input type='text' class="form-control" id="nazwisko" name='nazwisko' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" required />
+        </div>
+        <div class="mb-3">
+            <label for="imie" class="form-label">Imie:</label>
+            <input type='text' class="form-control" id="imie" name='imie' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" required />
+        </div>
+        <div class="mb-3">
+            <label for="ulica" class="form-label">Ulica:</label>
+            <input type='text' class="form-control" id="ulica" name='ulica' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" required />
+        </div>
+        <div class="mb-3">
+            <label for="miasto" class="form-label">Miasto:</label>
+            <input type='text' class="form-control" id="miasto" name='miasto' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" required />
+        </div>
+        <div class="mb-3">
+            <label for="poczta" class="form-label">Poczta:</label>
+            <input type='text' class="form-control" id="poczta" name='poczta' pattern="[0-9]{2}-[0-9]{3}" placeholder="00-000" required />
+        </div>
+        <div class="mb-3">
+            <label for="telefon" class="form-label">Numer Telefonu:</label>
+            <input type='text' class="form-control" id="telefon" name='telefon' pattern="[0-9]{9}" placeholder="123456789" required />
+        </div>
+        <input class="btn btn-primary" type='submit' value='Dodaj rekord' />
     </form>
-    <?php
+<?php
 }
 
 function ModificationList()
@@ -46,10 +56,37 @@ function ModificationList()
     $sql = "SELECT * FROM Wlasciciele;";
 
     $result = $db->Query($sql);
-    while ($row = mysqli_fetch_array($result)) {
-        $id = $row['ID_Wlasciciela'];
-        echo $id . " " . $row['Imie'] . " " . $row['Nazwisko'] . " <a href='modification.php?Option=Wlasciciele&id=$id'>Edytuj</a><br/>";
-    }
+
+?>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nazwisko</th>
+                <th scope="col">Imię</th>
+                <th scope="col">Działanie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($row = mysqli_fetch_array($result)) {
+                $id = $row['ID_Wlasciciela'];
+                $imie = $row['Imie'];
+                $nazwisko = $row['Nazwisko'];
+                $link = "<a href='modification.php?Option=Wlasciciele&id=$id'><button type='button' class='btn btn-success'>Edytuj</button></a>";
+                echo "
+            <tr>
+                <th scope='row'>$id</th>
+                <td>$imie</td>
+                <td>$nazwisko</td>
+                <td>$link</td>
+            </tr>
+        ";
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -58,20 +95,32 @@ function ModificationList()
 
     ?>
         <form method='POST' action='./Options/Wlasciciele/Wlasciciele_modification.php'>
-            Nazwisko:
-            <input type='text' name='nazwisko' value='<?php echo $result['Nazwisko']; ?>' pattern="[A-Za-z]{1,}" required /><br />
-            Imie:
-            <input type='text' name='imie' value='<?php echo $result['Imie']; ?>' pattern="[A-Za-z]{1,}" required /><br />
-            Ulica:
-            <input type='text' name='ulica' value='<?php echo $result['Ulica']; ?>' pattern="[A-Za-z]{1,}" required /><br />
-            Miasto:
-            <input type='text' name='miasto' value='<?php echo $result['Miasto']; ?>' pattern="[A-Za-z]{1,}" required /><br />
-            Poczta:
-            <input type='text' name='poczta' value='<?php echo $result['Poczta']; ?>' pattern="[0-9]{2}-[0-9]{3}" required /><br />
-            Numer Telefonu:
-            <input type='text' name='telefon' value='<?php echo $result['Telefon']; ?>' pattern="[0-9]{9}" required /><br />
+            <div class="mb-3">
+                <label for="nazwisko" class="form-label">Nazwisko:</label>
+                <input type='text' class="form-control" id="nazwisko" name='nazwisko' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" value='<?php echo $result['Nazwisko']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="imie" class="form-label">Imie:</label>
+                <input type='text' class="form-control" id="imie" name='imie' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" value='<?php echo $result['Imie']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="ulica" class="form-label">Ulica:</label>
+                <input type='text' class="form-control" id="ulica" name='ulica' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" value='<?php echo $result['Ulica']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="miasto" class="form-label">Miasto:</label>
+                <input type='text' class="form-control" id="miasto" name='miasto' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" value='<?php echo $result['Miasto']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="poczta" class="form-label">Poczta:</label>
+                <input type='text' class="form-control" id="poczta" name='poczta' pattern="[0-9]{2}-[0-9]{3}" placeholder="00-000" value='<?php echo $result['Poczta']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="telefon" class="form-label">Numer Telefonu:</label>
+                <input type='text' class="form-control" id="telefon" name='telefon' pattern="[0-9]{9}" placeholder="123456789" value='<?php echo $result['Telefon']; ?>' required />
+            </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
-            <input type='submit' value='Zmień rekord' />
+            <input type='submit' class="btn btn-primary" value='Zmień rekord' />
         </form>
     <?php
     }

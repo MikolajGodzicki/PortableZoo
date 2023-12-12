@@ -58,3 +58,25 @@ function ShowSelectWithArrays($syms, $names, $type)
         }
     }
 }
+
+function GetName($name)
+{
+    switch ($name) {
+        case "Kolory":
+            return "Kolory";
+        case "Leki":
+            return "Leki";
+        case "Wizyty":
+            return "Wizyty";
+        case "Wykonane_Zabiegi":
+            return "Wykonane Zabiegi";
+        case "Wlasciciele":
+            return "Właściciele";
+        case "Wykorzystane_Leki":
+            return "Wykorzystane Leki";
+        case "Zabiegi":
+            return "Zabiegi";
+        case "Zwierzeta":
+            return "Zwierzęta";
+    }
+}

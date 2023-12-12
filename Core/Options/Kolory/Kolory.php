@@ -1,5 +1,4 @@
 <?php
-echo $_GET['Option'] . "<br/>";
 
 function Show($type)
 {
@@ -21,12 +20,14 @@ function Show($type)
 function InsertForm()
 {
 ?>
-    <form method='POST' action='./Options/Kolory/Kolory_insert.php'>
-        Kolor:
-        <input type='text' name='kolor' pattern="[A-Za-z]{1,}" required /><br />
-        <input type='submit' value='Dodaj rekord' />
+    <form class="Form" method='POST' action='./Options/Kolory/Kolory_insert.php'>
+        <div class="mb-3">
+            <label for="kolor" class="form-label">Kolor:</label>
+            <input type='text' class="form-control" id="kolor" name='kolor' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" required />
+        </div>
+        <input type='submit' class="btn btn-primary" value='Dodaj rekord' />
     </form>
-    <?php
+<?php
 }
 
 function ModificationList()
@@ -36,10 +37,35 @@ function ModificationList()
     $sql = "SELECT * FROM Kolory;";
 
     $result = $db->Query($sql);
-    while ($row = mysqli_fetch_array($result)) {
-        $id = $row['ID_Koloru'];
-        echo $id . " " . $row['Kolor'] . " <a href='modification.php?Option=Kolory&id=$id'>Edytuj</a><br/>";
-    }
+
+
+?>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Kolor</th>
+                <th scope="col">Działanie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($row = mysqli_fetch_array($result)) {
+                $id = $row['ID_Koloru'];
+                $kolor = $row['Kolor'];
+                $link = "<a href='modification.php?Option=Kolory&id=$id'><button type='button' class='btn btn-success'>Edytuj</button></a>";
+                echo "
+                <tr>
+                    <th scope='row'>$id</th>
+                    <td>$kolor</td>
+                    <td>$link</td>
+                </tr>
+            ";
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -47,11 +73,13 @@ function ModificationList()
         $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
-        <form method='POST' action='./Options/Kolory/Kolory_modification.php'>
-            Kolor:
-            <input type='text' name='kolor' pattern="[A-Za-z]{1,}" value='<?php echo $result['Kolor']; ?>' required /><br />
+        <form class="Form" method='POST' action='./Options/Kolory/Kolory_modification.php'>
+            <div class="mb-3">
+                <label for="kolor" class="form-label">Kolor:</label>
+                <input type='text' class="form-control" id="kolor" name='kolor' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" value='<?php echo $result['Kolor']; ?>' required />
+            </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
-            <input type='submit' value='Zmień rekord' />
+            <input type='submit' class="btn btn-primary" value='Zmień rekord' />
         </form>
     <?php
     }

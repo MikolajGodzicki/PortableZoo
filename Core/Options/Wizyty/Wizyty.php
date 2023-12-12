@@ -1,5 +1,4 @@
 <?php
-echo $_GET['Option'] . "<br/>";
 
 function Show($type)
 {
@@ -21,28 +20,32 @@ function Show($type)
 function InsertForm()
 {
 ?>
-    <form method='POST' action='./Options/Wizyty/Wizyty_insert.php'>
-        ID Zwierzaka:
-        <select name="zwierzak" required>
-            <?php
-            $db = CoreDatabase::get_instance();
+    <form class="Form" method='POST' action='./Options/Wizyty/Wizyty_insert.php'>
+        <div class="mb-3">
+            <label for="zwierza" class="form-label">ID Zwierzaka:</label>
+            <select class="form-select" name="zwierzak" id="zwierzak" required>
+                <?php
+                $db = CoreDatabase::get_instance();
 
-            $sql = "SELECT ID_Zwierza, Imie FROM zwierzeta;";
+                $sql = "SELECT ID_Zwierza, Imie FROM zwierzeta;";
 
-            $result = $db->Query($sql);
-            while ($row = mysqli_fetch_array($result)) {
-                $id = $row['ID_Zwierza'];
-                echo "<option value='$id'>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
-            }
+                $result = $db->Query($sql);
+                while ($row = mysqli_fetch_array($result)) {
+                    $id = $row['ID_Zwierza'];
+                    echo "<option value='$id'>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
+                }
 
-            ?>
-        </select><br />
-        Kiedy:
-        <input type='date' name='kiedy' required /><br />
+                ?>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="kiedy" class="form-label">Kiedy:</label>
+            <input type='date' class="form-control" id="kiedy" name='kiedy' required />
+        </div>
 
-        <input type='submit' value='Dodaj rekord' />
+        <input type='submit' class="btn btn-primary" value='Dodaj rekord' />
     </form>
-    <?php
+<?php
 }
 
 function ModificationList()
@@ -53,6 +56,39 @@ function ModificationList()
     $sql = "SELECT wizyty.ID_Wizyty, wizyty.Kiedy, zwierzeta.Imie, zwierzeta.ID_Zwierza FROM wizyty INNER JOIN zwierzeta ON zwierzeta.ID_Zwierza = wizyty.ID_Zwierzaka;";
 
     $result = $db->Query($sql);
+
+
+?>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Zwierzęcie</th>
+                <th scope="col">Data wizyty</th>
+                <th scope="col">Działanie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($row = mysqli_fetch_array($result)) {
+                $id = $row['ID_Wizyty'];
+                $id_zwierza = $row['ID_Zwierza'];
+                $imie = $row['Imie'];
+                $kiedy = $row['Kiedy'];
+                $link = "<a href='modification.php?Option=Wizyty&id=$id'><button type='button' class='btn btn-success'>Edytuj</button></a>";
+                echo "
+                <tr>
+                    <th scope='row'>$id</th>
+                    <td>$id_zwierza - $imie</td>
+                    <td>$kiedy</td>
+                    <td>$link</td>
+                </tr>
+            ";
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php
     while ($row = mysqli_fetch_array($result)) {
         $id = $row['ID_Wizyty'];
         echo $id . ": " . $row['ID_Zwierza'] . " " . $row['Imie'] . ", " . $row['Kiedy'] . " <a href='modification.php?Option=Wizyty&id=$id'>Edytuj</a><br/>";
@@ -64,31 +100,34 @@ function ModificationList()
         $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
-        <form method='POST' action='./Options/Wizyty/Wizyty_modification.php'>
-            ID Zwierzaka:
-            <select name="zwierzak" required>
-                <?php
-                $db = CoreDatabase::get_instance();
+        <form class="Form" method='POST' action='./Options/Wizyty/Wizyty_modification.php'>
+            <div class="mb-3">
+                <label for="zwierza" class="form-label">ID Zwierzaka:</label>
+                <select class="form-select" name="zwierzak" id="zwierzak" required>
+                    <?php
+                    $db = CoreDatabase::get_instance();
 
-                $sql_ = "SELECT ID_Zwierza, Imie FROM zwierzeta;";
+                    $sql_ = "SELECT ID_Zwierza, Imie FROM zwierzeta;";
 
-                $result_ = $db->Query($sql_);
-                while ($row = mysqli_fetch_array($result_)) {
-                    $id_ = $row['ID_Zwierza'];
-                    if ($id_ == $result['ID_Zwierzaka']) {
-                        echo "<option value='$id_' selected>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
-                    } else {
-                        echo "<option value='$id_'>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
+                    $result_ = $db->Query($sql_);
+                    while ($row = mysqli_fetch_array($result_)) {
+                        $id_ = $row['ID_Zwierza'];
+                        if ($id_ == $result['ID_Zwierzaka']) {
+                            echo "<option value='$id_' selected>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
+                        } else {
+                            echo "<option value='$id_'>" . $row['ID_Zwierza'] . ": " . $row['Imie'] . "</option>";
+                        }
                     }
-                }
 
-                ?>
-            </select><br />
-
-            Kiedy:
-            <input type='date' name='kiedy' value='<?php echo $result['Kiedy']; ?>' required /><br />
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="kiedy" class="form-label">Kiedy:</label>
+                <input type='date' class="form-control" id="kiedy" name='kiedy' value='<?php echo $result['Kiedy']; ?>' required />
+            </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" required />
-            <input type='submit' value='Zmień rekord' />
+            <input type='submit' class="btn btn-primary" value='Zmień rekord' />
         </form>
     <?php
     }

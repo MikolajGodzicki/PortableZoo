@@ -20,44 +20,56 @@ function Show($type)
 function InsertForm()
 {
 ?>
-    <form method='POST' action='./Options/Zwierzeta/Zwierzeta_insert.php'>
-        Rodzaj zwierza:
-        <input type='text' name='rodzaj' pattern="[A-Za-z]{1,}" required /><br />
-        Imie:
-        <input type='text' name='imie' pattern="[A-Za-z]{1,}" required /><br />
-        Data urodzin:
-        <input type='date' name='data' required /><br />
-        Kolor:
-        <select name="kolor" required>
-            <?php
-            $db = CoreDatabase::get_instance();
+    <form class="Form" method='POST' action='./Options/Zwierzeta/Zwierzeta_insert.php'>
+        <div class="mb-3">
+            <label for="rodzaj" class="form-label">Rodzaj zwierza:</label>
+            <input type='text' class="form-control" id="rodzaj" name='rodzaj' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" required />
+        </div>
+        <div class="mb-3">
+            <label for="imie" class="form-label">Imie:</label>
+            <input type='text' class="form-control" id="imie" name='imie' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" required />
+        </div>
+        <div class="mb-3">
+            <label for="data" class="form-label">Data urodzin:</label>
+            <input type='date' class="form-control" id="data" name='data' required />
+        </div>
+        <div class="mb-3">
+            <label for="kolor" class="form-label">Kolor:</label>
 
-            $sql = "SELECT * FROM kolory;";
+            <select class="form-select" id="kolor" name="kolor" required>
+                <?php
+                $db = CoreDatabase::get_instance();
 
-            $result = $db->Query($sql);
-            while ($row = mysqli_fetch_array($result)) {
-                $id = $row['ID_Koloru'];
-                echo "<option value='$id'>" . $row['ID_Koloru'] . ": "  . $row['Kolor'] . "</option>";
-            }
+                $sql = "SELECT * FROM kolory;";
 
-            ?>
-        </select><br />
-        Właściciel:
-        <select name="wlasciciel" required>
-            <?php
-            $db = CoreDatabase::get_instance();
+                $result = $db->Query($sql);
+                while ($row = mysqli_fetch_array($result)) {
+                    $id = $row['ID_Koloru'];
+                    echo "<option value='$id'>" . $row['ID_Koloru'] . ": "  . $row['Kolor'] . "</option>";
+                }
 
-            $sql = "SELECT * FROM wlasciciele;";
+                ?>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="wlasciciel" class="form-label">Właściciel:</label>
 
-            $result = $db->Query($sql);
-            while ($row = mysqli_fetch_array($result)) {
-                $id = $row['ID_Wlasciciela'];
-                echo "<option value='$id'>" . $row['ID_Wlasciciela'] . ": "   . $row['Imie'] . "</option>";
-            }
-            ?>
-        </select><br />
+            <select class="form-select" id="wlasciciel" name="wlasciciel" required>
+                <?php
+                $db = CoreDatabase::get_instance();
 
-        <input type='submit' value='Dodaj rekord' />
+                $sql = "SELECT * FROM wlasciciele;";
+
+                $result = $db->Query($sql);
+                while ($row = mysqli_fetch_array($result)) {
+                    $id = $row['ID_Wlasciciela'];
+                    echo "<option value='$id'>" . $row['ID_Wlasciciela'] . ": "   . $row['Imie'] . "</option>";
+                }
+                ?>
+            </select>
+        </div>
+
+        <input class="btn btn-primary" type='submit' value='Dodaj rekord' />
     </form>
 <?php
 }
@@ -72,7 +84,7 @@ function ModificationList()
 
 ?>
     <table class="table table-striped">
-        <thead>
+        <thead class="table-dark">
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Imie</th>
@@ -86,7 +98,7 @@ function ModificationList()
                 $id = $row['ID_Zwierza'];
                 $imie = $row['Imie'];
                 $data = $row['Data_urodzin'];
-                $link = "<a href='modification.php?Option=Zwierzeta&id=$id'>Edytuj</a>";
+                $link = "<a href='modification.php?Option=Zwierzeta&id=$id'><button type='button' class='btn btn-success'>Edytuj</button></a>";
                 echo "
                     <tr>
                         <th scope='row'>$id</th>
@@ -107,52 +119,64 @@ function ModificationList()
         $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
-        <form method='POST' action='./Options/Zwierzeta/Zwierzeta_modification.php'>
-            Rodzaj zwierza:
-            <input type='text' name='rodzaj' pattern="[A-Za-z]{1,}" value='<?php echo $result['Rodzaj_zwierza']; ?>' required /><br />
-            Imie:
-            <input type='text' name='imie' pattern="[A-Za-z]{1,}" value='<?php echo $result['Imie']; ?>' required /><br />
-            Data urodzin:
-            <input type='date' name='data' value='<?php echo $result['Data_urodzin']; ?>' required /><br />
-            Kolor:
-            <select name="kolor" required>
-                <?php
-                $db = CoreDatabase::get_instance();
+        <form class="Form" method='POST' action='./Options/Zwierzeta/Zwierzeta_modification.php'>
+            <div class="mb-3">
+                <label for="rodzaj" class="form-label">Rodzaj zwierza:</label>
+                <input type='text' class="form-control" id="rodzaj" name='rodzaj' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" value='<?php echo $result['Rodzaj_zwierza']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="imie" class="form-label">Imie:</label>
+                <input type='text' class="form-control" id="imie" name='imie' pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,}" value='<?php echo $result['Imie']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="data" class="form-label">Data urodzin:</label>
+                <input type='date' class="form-control" id="data" name='data' value='<?php echo $result['Data_urodzin']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="kolor" class="form-label">Kolor:</label>
 
-                $sql_ = "SELECT * FROM kolory;";
+                <select class="form-select" id="kolor" name="kolor" required>
+                    <?php
+                    $db = CoreDatabase::get_instance();
 
-                $result_ = $db->Query($sql_);
-                while ($row = mysqli_fetch_array($result_)) {
-                    $id_ = $row['ID_Koloru'];
-                    if ($id_ == $result['ID_Koloru']) {
-                        echo "<option value='$id_' selected>" . $row['ID_Koloru'] . ": "  . $row['Kolor'] . "</option>";
-                    } else {
-                        echo "<option value='$id_'>" . $row['ID_Koloru'] . ": "  . $row['Kolor'] . "</option>";
+                    $sql_ = "SELECT * FROM kolory;";
+
+                    $result_ = $db->Query($sql_);
+                    while ($row = mysqli_fetch_array($result_)) {
+                        $id_ = $row['ID_Koloru'];
+                        if ($id_ == $result['ID_Koloru']) {
+                            echo "<option value='$id_' selected>" . $row['ID_Koloru'] . ": "  . $row['Kolor'] . "</option>";
+                        } else {
+                            echo "<option value='$id_'>" . $row['ID_Koloru'] . ": "  . $row['Kolor'] . "</option>";
+                        }
                     }
-                }
 
-                ?>
-            </select><br />
-            Właściciel:
-            <select name="wlasciciel" required>
-                <?php
-                $db = CoreDatabase::get_instance();
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="wlasciciel" class="form-label">Właściciel:</label>
 
-                $sql_ = "SELECT * FROM wlasciciele;";
+                <select class="form-select" id="wlasciciel" name="wlasciciel" required>
+                    <?php
+                    $db = CoreDatabase::get_instance();
 
-                $result_ = $db->Query($sql_);
-                while ($row = mysqli_fetch_array($result_)) {
-                    $id_ = $row['ID_Wlasciciela'];
-                    if ($id_ == $result['ID_Wlasciciela']) {
-                        echo "<option value='$id_' selected>" . $row['ID_Wlasciciela'] . ": "   . $row['Imie'] . "</option>";
-                    } else {
-                        echo "<option value='$id_'>" . $row['ID_Wlasciciela'] . ": "   . $row['Imie'] . "</option>";
+                    $sql_ = "SELECT * FROM wlasciciele;";
+
+                    $result_ = $db->Query($sql_);
+                    while ($row = mysqli_fetch_array($result_)) {
+                        $id_ = $row['ID_Wlasciciela'];
+                        if ($id_ == $result['ID_Wlasciciela']) {
+                            echo "<option value='$id_' selected>" . $row['ID_Wlasciciela'] . ": "   . $row['Imie'] . "</option>";
+                        } else {
+                            echo "<option value='$id_'>" . $row['ID_Wlasciciela'] . ": "   . $row['Imie'] . "</option>";
+                        }
                     }
-                }
-                ?>
-            </select><br />
+                    ?>
+                </select>
+            </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
-            <input type='submit' class="btn btn-secondary" value='Zmień rekord' />
+            <input type='submit' class="btn btn-primary" value='Zmień rekord' />
         </form>
     <?php
     }

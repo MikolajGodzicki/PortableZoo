@@ -1,5 +1,4 @@
 <?php
-echo $_GET['Option'] . "<br/>";
 
 function Show($type)
 {
@@ -21,41 +20,46 @@ function Show($type)
 function InsertForm()
 {
 ?>
-    <form method='POST' action='./Options/Wykonane_Zabiegi/Wykonane_Zabiegi_insert.php'>
-        Lek:
-        <select name="zabieg" required>
-            <?php
-            $db = CoreDatabase::get_instance();
+    <form class="Form" method='POST' action='./Options/Wykonane_Zabiegi/Wykonane_Zabiegi_insert.php'>
+        <div class="mb-3">
+            <label for="zabieg" class="form-label">Zabieg:</label>
+            <select class="form-select" id="zabieg" name="zabieg" required>
+                <?php
+                $db = CoreDatabase::get_instance();
 
-            $sql = "SELECT * FROM zabiegi;";
+                $sql = "SELECT * FROM zabiegi;";
 
-            $result = $db->Query($sql);
-            while ($row = mysqli_fetch_array($result)) {
-                $id = $row['ID_Uslugi'];
-                echo "<option value='$id'>" . $row['Nazwa'] . "</option>";
-            }
+                $result = $db->Query($sql);
+                while ($row = mysqli_fetch_array($result)) {
+                    $id = $row['ID_Uslugi'];
+                    echo "<option value='$id'>" . $row['Nazwa'] . "</option>";
+                }
 
-            ?>
-        </select><br />
-        Wizyta:
-        <select name="wizyta" required>
-            <?php
-            $db = CoreDatabase::get_instance();
+                ?>
+            </select>
+        </div>
 
-            $sql = "SELECT * FROM wizyty;";
+        <div class="mb-3">
+            <label for="wizyta" class="form-label">Wizyta:</label>
+            <select class="form-select" id="wizyta" name="wizyta" required>
+                <?php
+                $db = CoreDatabase::get_instance();
 
-            $result = $db->Query($sql);
-            while ($row = mysqli_fetch_array($result)) {
-                $id = $row['ID_Wizyty'];
-                echo "<option value='$id'>" . $id . ": "  . $row['Kiedy'] . "</option>";
-            }
+                $sql = "SELECT * FROM wizyty;";
 
-            ?>
-        </select><br />
+                $result = $db->Query($sql);
+                while ($row = mysqli_fetch_array($result)) {
+                    $id = $row['ID_Wizyty'];
+                    echo "<option value='$id'>" . $id . ": "  . $row['Kiedy'] . "</option>";
+                }
 
-        <input type='submit' value='Dodaj rekord' />
+                ?>
+            </select>
+        </div>
+
+        <input type='submit' class="btn btn-primary" value='Dodaj rekord' />
     </form>
-    <?php
+<?php
 }
 
 function ModificationList()
@@ -66,10 +70,37 @@ function ModificationList()
     $sql = "SELECT wykonane_zabiegi.ID_Operacji, zabiegi.Nazwa, wizyty.Kiedy FROM wykonane_zabiegi INNER JOIN zabiegi ON wykonane_zabiegi.ID_Zabiegu = zabiegi.ID_Uslugi INNER JOIN wizyty ON wizyty.ID_Wizyty = wykonane_zabiegi.ID_Wizyty;";
 
     $result = $db->Query($sql);
-    while ($row = mysqli_fetch_array($result)) {
-        $id = $row['ID_Operacji'];
-        echo $id . ": " . $row['Nazwa'] . ", " . $row['Kiedy'] . " <a href='modification.php?Option=Wykonane_Zabiegi&id=$id'>Edytuj</a><br/>";
-    }
+
+?>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Zabieg</th>
+                <th scope="col">Kiedy</th>
+                <th scope="col">Działanie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($row = mysqli_fetch_array($result)) {
+                $id = $row['ID_Operacji'];
+                $nazwa = $row['Nazwa'];
+                $kiedy = $row['Kiedy'];
+                $link = "<a href='modification.php?Option=Wykonane_Zabiegi&id=$id'><button type='button' class='btn btn-success'>Edytuj</button></a>";
+                echo "
+                    <tr>
+                        <th scope='row'>$id</th>
+                        <td>$nazwa</td>
+                        <td>$kiedy</td>
+                        <td>$link</td>
+                    </tr>
+                ";
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -77,47 +108,52 @@ function ModificationList()
         $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
-        <form method='POST' action='./Options/Wykonane_Zabiegi/Wykonane_Zabiegi_modification.php'>
-            Zabieg:
-            <select name="zabieg" required>
-                <?php
-                $db = CoreDatabase::get_instance();
+        <form class="Form" method='POST' action='./Options/Wykonane_Zabiegi/Wykonane_Zabiegi_modification.php'>
+            <div class="mb-3">
+                <label for="zabieg" class="form-label">Zabieg:</label>
+                <select class="form-select" id="zabieg" name="zabieg" required>
+                    <?php
+                    $db = CoreDatabase::get_instance();
 
-                $sql = "SELECT * FROM zabiegi;";
+                    $sql = "SELECT * FROM zabiegi;";
 
-                $result_ = $db->Query($sql);
-                while ($row = mysqli_fetch_array($result_)) {
-                    $id_ = $row['ID_Uslugi'];
-                    if ($id_ == $result['ID_Zabiegu']) {
-                        echo "<option value='$id_' selected>" . $row['Nazwa'] . "</option>";
-                    } else {
-                        echo "<option value='$id_'>" . $row['Nazwa'] . "</option>";
+                    $result_ = $db->Query($sql);
+                    while ($row = mysqli_fetch_array($result_)) {
+                        $id_ = $row['ID_Uslugi'];
+                        if ($id_ == $result['ID_Zabiegu']) {
+                            echo "<option value='$id_' selected>" . $row['Nazwa'] . "</option>";
+                        } else {
+                            echo "<option value='$id_'>" . $row['Nazwa'] . "</option>";
+                        }
                     }
-                }
 
-                ?>
-            </select><br />
-            Wizyta:
-            <select name="wizyta" required>
-                <?php
-                $db = CoreDatabase::get_instance();
+                    ?>
+                </select>
+            </div>
 
-                $sql = "SELECT * FROM wizyty;";
+            <div class="mb-3">
+                <label for="wizyta" class="form-label">Wizyta:</label>
+                <select class="form-select" id="wizyta" name="wizyta" required>
+                    <?php
+                    $db = CoreDatabase::get_instance();
 
-                $result_ = $db->Query($sql);
-                while ($row = mysqli_fetch_array($result_)) {
-                    $id_ = $row['ID_Wizyty'];
-                    if ($id_ == $result['ID_Wizyty']) {
-                        echo "<option value='$id_' selected>" . $id_ . ": "  . $row['Kiedy'] . "</option>";
-                    } else {
-                        echo "<option value='$id_'>" . $id_ . ": "  . $row['Kiedy'] . "</option>";
+                    $sql = "SELECT * FROM wizyty;";
+
+                    $result_ = $db->Query($sql);
+                    while ($row = mysqli_fetch_array($result_)) {
+                        $id_ = $row['ID_Wizyty'];
+                        if ($id_ == $result['ID_Wizyty']) {
+                            echo "<option value='$id_' selected>" . $id_ . ": "  . $row['Kiedy'] . "</option>";
+                        } else {
+                            echo "<option value='$id_'>" . $id_ . ": "  . $row['Kiedy'] . "</option>";
+                        }
                     }
-                }
 
-                ?>
-            </select><br />
+                    ?>
+                </select>
+            </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
-            <input type='submit' value='Zmień rekord' />
+            <input type='submit' class="btn btn-primary" value='Zmień rekord' />
         </form>
     <?php
     }

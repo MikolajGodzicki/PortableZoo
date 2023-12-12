@@ -1,5 +1,4 @@
 <?php
-echo $_GET['Option'] . "<br/>";
 
 function Show($type)
 {
@@ -21,14 +20,18 @@ function Show($type)
 function InsertForm()
 {
 ?>
-    <form method='POST' action='./Options/Zabiegi/Zabiegi_insert.php'>
-        Nazwa:
-        <input type='text' name='nazwa' required /><br />
-        Cena:
-        <input type='number' step='0.01' name='cena' required /><br />
-        <input type='submit' value='Dodaj rekord' />
+    <form class="Form" method='POST' action='./Options/Zabiegi/Zabiegi_insert.php'>
+        <div class="mb-3">
+            <label for="nazwa" class="form-label">Nazwa:</label>
+            <input type='text' class="form-control" id="nazwa" name='nazwa' required />
+        </div>
+        <div class="mb-3">
+            <label for="cena" class="form-label">Cena:</label>
+            <input type='number' class="form-control" id="cena" step='0.01' name='cena' required />
+        </div>
+        <input type='submit' class="btn btn-primary" value='Dodaj rekord' />
     </form>
-    <?php
+<?php
 }
 
 function ModificationList()
@@ -38,24 +41,54 @@ function ModificationList()
     $sql = "SELECT * FROM zabiegi;";
 
     $result = $db->Query($sql);
-    while ($row = mysqli_fetch_array($result)) {
-        $id = $row['ID_Uslugi'];
-        echo $id . " " . $row['Nazwa'] . " " . $row['Cena'] . " <a href='modification.php?Option=Zabiegi&id=$id'>Edytuj</a><br/>";
-    }
 
+?>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Działanie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($row = mysqli_fetch_array($result)) {
+                $id = $row['ID_Uslugi'];
+                $nazwa = $row['Nazwa'];
+                $cena = $row['Cena'];
+                $link = "<a href='modification.php?Option=Zabiegi&id=$id'><button type='button' class='btn btn-success'>Edytuj</button></a>";
+                echo "
+                    <tr>
+                        <th scope='row'>$id</th>
+                        <td>$nazwa</td>
+                        <td>$cena</td>
+                        <td>$link</td>
+                    </tr>
+                ";
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         $sql = "SELECT * FROM zabiegi WHERE ID_Uslugi=$id;";
         $result = mysqli_fetch_array($db->Query($sql));
 
     ?>
-        <form method='POST' action='./Options/Zabiegi/Zabiegi_modification.php'>
-            Nazwa:
-            <input type='text' name='nazwa' value='<?php echo $result['Nazwa']; ?>' required /><br />
-            Cena:
-            <input type='number' step='0.01' name='cena' value='<?php echo $result['Cena']; ?>' required /><br />
+        <form class="Form" method='POST' action='./Options/Zabiegi/Zabiegi_modification.php'>
+            <div class="mb-3">
+                <label for="nazwa" class="form-label">Nazwa:</label>
+                <input type='text' class="form-control" id="nazwa" name='nazwa' value='<?php echo $result['Nazwa']; ?>' required />
+            </div>
+            <div class="mb-3">
+                <label for="cena" class="form-label">Cena:</label>
+                <input type='number' class="form-control" id="cena" step='0.01' name='cena' value='<?php echo $result['Cena']; ?>' required />
+            </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
-            <input type='submit' value='Zmień rekord' />
+            <input type='submit' class="btn btn-primary" value='Zmień rekord' />
         </form>
     <?php
     }
